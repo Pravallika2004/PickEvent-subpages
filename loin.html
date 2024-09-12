@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .container {
+      max-width: 400px;
+      margin: 50px auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2 class="text-center mb-4">Login</h2>
+    <form id="loginForm" onsubmit="login(event)">
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" class="form-control" id="username" name="username" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" class="form-control" id="password" name="password">
+      </div>
+      <div class="form-group form-check">
+        <input type="checkbox" class="form-check-input" id="otpCheckbox">
+        <label class="form-check-label" for="otpCheckbox">Login using OTP</label>
+      </div>
+      <div id="otpSection" style="display:none;">
+        <div class="form-group">
+          <label for="otp">OTP:</label>
+          <input type="text" class="form-control" id="otp" name="otp">
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">Login</button>
+      <button type="reset" class="btn btn-secondary ml-2">Reset</button>
+    </form>
+  </div>
+
+  <!-- Bootstrap JS and dependencies (jQuery) -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <!-- Custom JavaScript -->
+  <script>
+    function login(event) {
+      event.preventDefault(); // Prevent default form submission
+
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      const otp = document.getElementById('otp').value;
+      const useOTP = document.getElementById('otpCheckbox').checked;
+
+      if (!username || (!password && !useOTP)) {
+        alert("Please enter username and password or OTP.");
+        return;
+      }
+
+      if (useOTP && !otp) {
+        alert("Please enter OTP.");
+        return;
+      }
+
+      // Simulating login process
+      if (useOTP) {
+        alert(`Logging in with OTP for user: ${username}`);
+      } else {
+        alert(`Logging in with password for user: ${username}`);
+      }
+
+      // Clear form fields
+      document.getElementById('loginForm').reset();
+    }
+
+    document.getElementById('otpCheckbox').addEventListener('change', function () {
+      document.getElementById('otpSection').style.display = this.checked ? 'block' : 'none';
+    });
+  </script>
+</body>
+</html>

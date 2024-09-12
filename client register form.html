@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration Page</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2 class="text-center mb-4">Registration Form</h2>
+    <form id="registrationForm" onsubmit="return validateForm()">
+      <div class="form-group">
+        <label for="firstName">First Name:</label>
+        <input type="text" class="form-control" id="firstName" name="firstName" required>
+      </div>
+      <div class="form-group">
+        <label for="lastName">Last Name:</label>
+        <input type="text" class="form-control" id="lastName" name="lastName" required>
+      </div>
+      <div class="form-group">
+        <label for="mobile">Mobile No:</label>
+        <input type="text" class="form-control" id="mobile" name="mobile" required pattern="[0-9]{10}" title="Enter a 10-digit mobile number">
+      </div>
+      <div class="form-group">
+        <label for="address">Address:</label>
+        <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="email">Email ID:</label>
+        <input type="email" class="form-control" id="email" name="email" required>
+      </div>
+      <div class="form-group">
+        <label for="religion">Religion:</label>
+        <input type="text" class="form-control" id="religion" name="religion" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="reset" class="btn btn-secondary ml-2">Reset</button>
+    </form>
+  </div>
+
+  <!-- Bootstrap JS and dependencies (jQuery) -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <!-- Custom JavaScript for form validation -->
+  <script>
+    function validateForm() {
+      var form = document.getElementById('registrationForm');
+      if (!form.checkValidity()) {
+        // If the form is not valid, display error messages
+        form.classList.add('was-validated');
+        return false;
+      }
+      // If the form is valid, submit the form
+      return true;
+    }
+  </script>
+</body>
+</html>

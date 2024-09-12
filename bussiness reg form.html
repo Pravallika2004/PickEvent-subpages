@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration Form</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2 class="text-center mb-4">Register</h2>
+    <form id="registrationForm" onsubmit="validateForm(event)">
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" class="form-control" id="username" name="username" required>
+      </div>
+      <div class="form-group">
+        <label for="mobile">Mobile Number:</label>
+        <input type="tel" class="form-control" id="mobile" name="mobile" pattern="[0-9]{10}" title="Enter a 10-digit mobile number" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" class="form-control" id="email" name="email" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" class="form-control" id="password" name="password" minlength="8" required>
+      </div>
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password:</label>
+        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+      </div>
+<div>
+     <label for="businessCategory">Select a business category:</label>
+<select id="businessCategory" onchange="populateOptions()">
+    <option value="">Select a category</option>
+    <option value="mandap">Mandap</option>
+    <option value="catering">Catering</option>
+    <option value="pandith">Pandith</option>
+    <option value="invitation">Invitation</option>
+    <option value="outfits">Outfits</option>
+    <option value="jewellery">Jewellery</option>
+    <option value="transportation">Transportation</option>
+    <option value="choreography">Choreography</option>
+    <option value="photography">Photography</option>
+    <option value="makeup artist">Makeup Artist</option>
+    <option value="decoration">Decoration</option>
+    <option value="dj">DJ</option>
+    <option value="music-singers">Music - Singers</option>
+    <option value="live-band">Live Band</option>
+    <option value="magicians">Magicians</option>
+    <option value="live-painters">Live Painters</option>
+</select>
+
+
+<script>
+    const optionsByCategory = {
+        mandap: ["Mandap Option 1", "Mandap Option 2", "Mandap Option 3"],
+        catering: ["Catering Option 1", "Catering Option 2", "Catering Option 3"],
+        pandith: ["Pandith Option 1", "Pandith Option 2", "Pandith Option 3"],
+        invitation: ["Invitation Option 1", "Invitation Option 2", "Invitation Option 3"],
+        outfits: ["Outfits Option 1", "Outfits Option 2", "Outfits Option 3"],
+        jewellery: ["Jewellery Option 1", "Jewellery Option 2", "Jewellery Option 3"],
+        transportation: ["Transportation Option 1", "Transportation Option 2", "Transportation Option 3"],
+        choreography: ["Choreography Option 1", "Choreography Option 2", "Choreography Option 3"],
+        photography: ["Photography Option 1", "Photography Option 2", "Photography Option 3"],
+        "makeup artist": ["Makeup Artist Option 1", "Makeup Artist Option 2", "Makeup Artist Option 3"],
+        decoration: ["Decoration Option 1", "Decoration Option 2", "Decoration Option 3"],
+        dj: ["DJ Option 1", "DJ Option 2", "DJ Option 3"],
+        "music-singers": ["Music - Singers Option 1", "Music - Singers Option 2", "Music - Singers Option 3"],
+        "live-band": ["Live Band Option 1", "Live Band Option 2", "Live Band Option 3"],
+        magicians: ["Magicians Option 1", "Magicians Option 2", "Magicians Option 3"],
+        "live-painters": ["Live Painters Option 1", "Live Painters Option 2", "Live Painters Option 3"]
+    };
+tElementById("businessOptions");
+        const selectedCategory = categoryDropdown.value;
+
+        optionsDropdown.innerHTML = ""; // Clear existing options
+
+        if (selectedCategory !== "") {
+            optionsByCategory[selectedCategory].forEach(option => {
+                const optionElement = document.createElement("option");
+                optionElement.value = option;
+                optionElement.textContent = option;
+                optionsDropdown.appendChild(optionElement);
+            });
+        }
+    }
+</script>
+</div>
+<div class="form-group">
+        <label for="upload">upload:</label>
+        <input type="file" class="form-control-file" id="upload" name="upload" accept="image/*" required>
+      </div>
+      <button type="upload" class="btn btn-primary">upload</button>&nbsp;&nbsp;&nbsp;
+
+
+      <div class="form-group">
+        <label for="officeNumber">Office Number:</label>
+        <input type="tel" class="form-control" id="officeNumber" name="officeNumber" required>
+      </div>
+      <div class="form-group">
+        <label for="officeAddress">Office Address:</label>
+        <textarea class="form-control" id="officeAddress" name="officeAddress" rows="3" required></textarea>
+      </div>
+ <div class="form-group">
+        <label for="upload">Registration Certificate:</label>
+        <input type="file" class="form-control-file" id="upload" name="upload" accept="image/*" required>
+      </div>
+      <button type="upload" class="btn btn-primary">upload</button>&nbsp;&nbsp;&nbsp;
+<div>
+<select id="bankDropdown" onchange="checkOther()">
+    <option value="">Select a bank</option>
+    <option value="SBI">State Bank of India</option>
+    <option value="Central Bank of India">Central Bank of India</option>
+    <option value="Bank of Baroda">Bank of Baroda</option>
+    <option value="Union Bank">Union Bank</option>
+    <option value="Andhra Bank">Andhra Bank</option>
+    <option value="Canara Bank">Canara Bank</option>
+    <option value="Axis Bank">Axis Bank</option>
+    <option value="HDFC Bank">HDFC Bank</option>
+    <option value="Indian Overseas Bank">Indian Overseas Bank</option>
+    <option value="Bank of Maharashtra">Bank of Maharashtra</option>
+    <option value="Federal Bank">Federal Bank</option>
+    <option value="UCO Bank">UCO Bank</option>
+    <option value="Kotak Mahindra">Kotak Mahindra Bank</option>
+    <option value="ICICI Bank">ICICI Bank</option>
+    <option value="Others">Others</option>
+</select>
+</div>
+<div id="otherBank" style="display: none;">
+    <label for="otherBankName">Enter Bank Name:</label>
+    <input type="text" id="otherBankName" placeholder="Other Bank Name">
+</div>
+
+<script>
+    function checkOther() {
+        const bankDropdown = document.getElementById("bankDropdown");
+        const otherBankDiv = document.getElementById("otherBank");
+        const otherBankNameInput = document.getElementById("otherBankName");
+
+        if (bankDropdown.value === "Others") {
+            otherBankDiv.style.display = "block";
+            otherBankNameInput.required = true;
+        } else {
+            otherBankDiv.style.display = "none";
+            otherBankNameInput.required = false;
+            otherBankNameInput.value = "";
+        }
+    }
+</script>
+
+
+       
+<div class="form-group">
+        <label for="account Number">Account Number:</label>
+        <input type="text" class="form-control" id="account Number" name="account Number"  required>
+      </div>
+<div class="form-group">
+        <label for="IFSC code">IFSC code:</label>
+        <input type="text" class="form-control" id="IFSC code" name="IFSC code"  required>
+      </div>
+<div class="form-group">
+        <label for="pan number">Pan Number:</label>
+        <input type="text" class="form-control" id="Pan number" name="pan number"  required>
+      </div>
+<div class="form-group">
+        <label for="Gst Number">Gst Number:</label>
+        <input type="text" class="form-control" id="Gst Number" name="Gst Number"  required>
+      </div>
+
+
+
+
+
+      <button type="submit" class="btn btn-primary">Register</button>
+      <button type="reset" class="btn btn-secondary ml-2">Reset</button>
+    </form>
+  </div>
+
+  <!-- Bootstrap JS and dependencies (jQuery) -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <!-- Custom JavaScript -->
+  <script>
+    function validateForm(event) {
+      event.preventDefault(); // Prevent default form submission
+
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+
+      if (password !== confirmPassword) {
+        alert("Passwords do not match");
+        return;
+      }
+
+      const ServicePicture = document.getElementById('ServicePicture').files[0];
+      if (!sServicePicture) {
+        alert("Please upload a Service picture");
+        return;
+      }
+
+      // Form is valid, you can submit data to the server or perform other actions here
+      const form = document.getElementById('registrationForm');
+      const formData = new FormData(form);
+      console.log('Form Data:', Object.fromEntries(formData.entries()));
+
+      // Clear form fields
+      form.reset();
+    }
+  </script>
+</body>
+</html>

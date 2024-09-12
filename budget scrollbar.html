@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Range Scrollbar</title>
+  <style>
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+    }
+    .range-container {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .range-label {
+      margin-right: 10px;
+    }
+    .range-input {
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="range-container">
+      <label for="amountRange" class="range-label">Select Amount:</label>
+      <input type="range" class="custom-range range-input" id="amountRange" min="5000" max="500000" step="1000" value="5000">
+      <span id="amountValue"></span>
+    </div>
+  </div>
+
+  <script>
+    const amountRange = document.getElementById('amountRange');
+    const amountValue = document.getElementById('amountValue');
+
+    // Display initial value
+    amountValue.textContent = formatAmount(amountRange.value);
+
+    // Update value on input change
+    amountRange.addEventListener('input', function() {
+      amountValue.textContent = formatAmount(this.value);
+    });
+
+    // Format amount with 'k' or 'M' suffix
+    function formatAmount(value) {
+      let formattedValue = parseInt(value);
+      if (formattedValue >= 1000000) {
+        formattedValue = (formattedValue / 1000000).toFixed(1) + 'M';
+      } else if (formattedValue >= 1000) {
+        formattedValue = (formattedValue / 1000).toFixed(1) + 'k';
+      }
+      return formattedValue;
+    }
+  </script>
+</body>
+</html>
