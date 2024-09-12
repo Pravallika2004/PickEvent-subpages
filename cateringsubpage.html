@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catering Services</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: palevioletred;
+        }
+        h1 {
+            text-align: center;
+            color: maroon;
+            font-size: 3em;
+            background: url('food.jpg');
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            animation: move 10s linear infinite;
+        }
+        @keyframes move {
+            0% { background-position: 0 0; }
+            100% { background-position: 100% 100%; }
+        }
+        .search-bar {
+            margin-bottom: 20px;
+        }
+        .service {
+            margin-bottom: 20px;
+        }
+        .service h2 {
+            color: maroon;
+        }
+        .service .logo {
+            display: block;
+            margin: 10px 0;
+        }
+        .menu-section {
+            display: none;
+        }
+        .special-items, .other-items {
+            margin-top: 10px;
+        }
+        .total-cost, .offer-code, .availability-status {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .offer-code {
+            color: green;
+        }
+        button {
+            background: linear-gradient(to right, red, yellow);
+            border: none;
+            padding: 10px 20px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background: linear-gradient(to right, yellow, red);
+        }
+        input[type="checkbox"]:checked {
+            outline: 2px solid red;
+        }
+        .feedback, .query {
+            margin-top: 20px;
+        }
+        #chatBox, #feedbackBox {
+            display: none;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-top: 10px;
+        }
+        .star-rating {
+            color: gold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Catering Services</h1>
+
+    <!-- Search bar and calendar -->
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search for catering services...">
+        <input type="datetime-local" id="eventDateTime">
+        <button onclick="searchServices()">Search</button>
+    </div>
+
+    <!-- Catering services -->
+    <div class="service">
+        <h2>delicious catering</h2>
+        <img src="logo8.jpg" alt="Logo 1" class="logo">
+        <a href="photos1.html">View Photos & Videos</a>
+        <p class="star-rating">Rating: ★★★★☆</p>
+        <p>Location: City 1</p>
+        <p class="availability-status" id="availability1">Checking availability...</p>
+        <p>Cost per plate: ₹250</p>
+    </div>
+    
+    <!-- Menu selection -->
+    <form id="cateringForm">
+        <h2>Select Your Menu</h2>
+        <label><input type="radio" name="menuType" value="veg" onchange="showMenuOptions()"> Vegetarian</label>
+        <label><input type="radio" name="menuType" value="non-veg" onchange="showMenuOptions()"> Non-Vegetarian</label>
+        <label><input type="radio" name="menuType" value="both" onchange="showMenuOptions()"> Both</label>
+
+        <!-- Vegetarian options -->
+        <div id="vegOptions" class="menu-section">
+            <h3>Vegetarian Menu</h3>
+            <label><input type="checkbox" name="vegMenu" value="plain rice"> Plain Rice</label><br>
+            <label><input type="checkbox" name="vegMenu" value="veg biryani"> Veg Biryani</label><br>
+            <label><input type="checkbox" name="vegMenu" value="sambar"> Sambar</label><br>
+            <label><input type="checkbox" name="vegMenu" value="dal"> Dal</label><br>
+            <label>Other: <input type="text" name="vegOther"></label>
+        </div>
+
+        <!-- Non-Vegetarian options -->
+        <div id="nonVegOptions" class="menu-section">
+            <h3>Non-Vegetarian Menu</h3>
+            <label><input type="checkbox" name="nonVegMenu" value="chicken curry"> Chicken Curry</label><br>
+            <label><input type="checkbox" name="nonVegMenu" value="mutton keema"> Mutton Keema</label><br>
+            <label><input type="checkbox" name="nonVegMenu" value="chicken biryani"> Chicken Biryani</label><br>
+            <label><input type="checkbox" name="nonVegMenu" value="plain rice"> Plain Rice</label><br>
+            <label>Other: <input type="text" name="nonVegOther"></label>
+        </div>
+
+        <!-- Special items -->
+        <div class="special-items">
+            <h3>Special Items</h3>
+            <label><input type="checkbox" name="specialItems" value="pani puri"> Pani Puri</label><br>
+            <label><input type="checkbox" name="specialItems" value="cotton candy"> Cotton Candy</label><br>
+            <label><input type="checkbox" name="specialItems" value="special pan"> Special Pan</label><br>
+            <label>Other: <input type="text" name="specialOther"></label>
+        </div>
+
+        <!-- Other items -->
+        <div class="other-items">
+            <h3>Other Items</h3>
+            <label>Other: <input type="text" name="otherItems"></label>
+        </div>
+
+        <!-- Calculate and submit -->
+        <button type="button" onclick="calculateCost()">Calculate Cost</button>
+        <div class="total-cost" id="totalCost"></div>
+        <label>Apply Offer Code: <input type="text" id="offerInput"></label>
+        <button type="button" onclick="applyOffer()">Apply</button>
+        <div class="offer-code" id="offerCode"></div>
+        <button type="button" onclick="submitForm()">Submit</button>
+        <button type="button" onclick="makePayment()">Pay</button>
+    </form>
+
+    <!-- Feedback and queries -->
+    <div class="feedback">
+        <h3>Feedback & Reviews</h3>
+        <button type="button" onclick="openFeedback()">Give Feedback</button>
+        <div id="feedbackBox">
+            <textarea id="feedbackMessage" rows="4" cols="50" placeholder="Enter your feedback here..."></textarea><br>
+            <button type="button" onclick="submitFeedback()">Submit</button>
+            <button type="button" onclick="closeFeedback()">Close</button>
+        </div>
+    </div>
+    <div class="query">
+        <h3>Any Queries?</h3>
+        <button type="button" onclick="openChat()">Chat with us</button>
+        <div id="chatBox">
+            <textarea id="chatMessage" rows="4" cols="50" placeholder="Enter your query here..."></textarea><br>
+            <button type="button" onclick="closeChat()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        function showMenuOptions() {
+            const menuType = document.querySelector('input[name="menuType"]:checked').value;
+            document.getElementById('vegOptions').style.display = menuType === 'veg' || menuType === 'both' ? 'block' : 'none';
+            document.getElementById('nonVegOptions').style.display = menuType === 'non-veg' || menuType === 'both' ? 'block' : 'none';
+        }
+
+        function calculateCost() {
+            let totalCost = 0;
+            const vegOptions = document.querySelectorAll('input[name="vegMenu"]:checked');
+            const nonVegOptions = document.querySelectorAll('input[name="nonVegMenu"]:checked');
+            const specialItems = document.querySelectorAll('input[name="specialItems"]:checked');
+
+            totalCost += vegOptions.length * 100;
+            totalCost += nonVegOptions.length * 150;
+            totalCost += specialItems.length * 200;
+
+            document.getElementById('totalCost').innerText = 'Total Cost: ₹' + totalCost;
+        }
+
+    function applyOffer() {
+            const offerCode = document.getElementById('offerInput').value;
+            if (offerCode === 'SAVE10') {
+                document.getElementById('offerCode').innerText = 'Offer Applied: 10% off';
+            } else {
+                document.getElementById('offerCode').innerText = 'Invalid Offer Code';
+            }
+        }
+
+        function submitForm() {
+            alert('Form submitted successfully!');
+        }
+
+        function makePayment() {
+            alert('Proceeding to payment...');
+        }
+
+        function openFeedback() {
+            document.getElementById('feedbackBox').style.display = 'block';
+        }
+
+        function closeFeedback() {
+            document.getElementById('feedbackBox').style.display = 'none';
+        }
+
+        function submitFeedback() {
+            alert('Feedback submitted successfully!');
+        }
+
+        function openChat() {
+            document.getElementById('chatBox').style.display = 'block';
+        }
+
+        function closeChat() {
+            document.getElementById('chatBox').style.display = 'none';
+        }
+
+        function searchServices() {
+            const searchInput = document.getElementById('searchInput').value;
+            const eventDateTime = document.getElementById('eventDateTime').value;
+            alert('Searching for: ' + searchInput + ' on ' + eventDateTime);
+
+            // Sample availability check (to be replaced with actual check)
+            document.getElementById('availability1').innerText = 'Available';
+            document.getElementById('availability2').innerText = 'Busy';
+        }
+    </script>
+</body>
+</html>
+    
+

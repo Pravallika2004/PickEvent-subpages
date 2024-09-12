@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magician Booking</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .search-bar {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .search-bar input[type="text"] {
+            width: 70%;
+            padding: 10px;
+            margin-right: 10px;
+        }
+        .search-bar button {
+            padding: 10px 20px;
+            background-color: maroon;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .calendar-time {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .calendar-time input[type="date"], .calendar-time input[type="time"] {
+            margin-right: 10px;
+            padding: 10px;
+        }
+        .magician-list {
+            margin-top: 20px;
+        }
+        .magician-item {
+            background-color: #fff;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .magician-item h3 {
+            color: maroon;
+        }
+        .magician-item img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+        }
+        .magician-item p {
+            margin: 5px 0;
+        }
+        .work-links a {
+            display: block;
+            margin-top: 5px;
+            color: maroon;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        .time-cost {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+        .time-cost select, .time-cost input[type="number"] {
+            margin-right: 10px;
+            padding: 10px;
+        }
+        .cost {
+            margin-top: 5px;
+            color: maroon;
+        }
+        .submit-button {
+            padding: 10px 20px;
+            background-color: maroon;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+            display: block;
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="magicCanvas"></canvas>
+    <div class="container">
+        <div class="search-bar">
+            <input type="text" placeholder="Search for magicians...">
+            <button>Search</button>
+        </div>
+
+        <div class="calendar-time">
+            <input type="date">
+            <input type="time">
+        </div>
+
+        <div class="magician-list">
+            <!-- Example Magician Item -->
+            <div class="magician-item">
+                <h3>Magician Ram</h3>
+                <img src="magician.jpg" alt="Magician">
+                <p>Rating: ★★★★☆</p>
+                <p>Area: overall hyderabad</p>
+                <div class="work-links">
+                    <a href="work_pictures.html" target="_blank">Work Pictures</a>
+                    <a href="work_videos.html" target="_blank">Work Videos</a>
+                </div>
+                <div class="time-cost">
+                    <select name="duration">
+                        <option value="hours">Hours</option>
+                        <option value="days">Days</option>
+                    </select>
+                    <input type="number" placeholder="Count">
+                </div>
+                <div class="cost">$100</div>
+            </div>
+            <!-- Repeat for other magicians -->
+        </div>
+
+        <button class="submit-button">Submit</button>
+    </div>
+   <div>
+      <div class="query">
+        <h3>Any Queries?</h3>
+        <button type="button" onclick="openChat()">Chat with us</button>
+        <div id="chatBox">
+            <textarea id="chatMessage" rows="4" cols="50" placeholder="Enter your query here..."></textarea><br>
+            <button type="button" onclick="closeChat()">Close</button>
+        </div>
+
+
+    <script>
+        const canvas = document.getElementById('magicCanvas');
+        const ctx = canvas.getContext('2d');
+        const particles = [];
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const magicTools = ['🪄', '🎩', '🔮', '✨'];
+
+        function random(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+
+        class Particle {
+            constructor() {
+                this.x = random(0, canvas.width);
+                this.y = random(0, canvas.height);
+                this.size = random(20, 30);
+                this.speedX = random(-2, 2);
+                this.speedY = random(-1, 1.5);
+                this.tool = magicTools[Math.floor(random(0, magicTools.length))];
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.size > 0.2) this.size -= 0.1;
+            }
+
+            draw() {
+                ctx.font = `${this.size}px Arial`;
+                ctx.fillText(this.tool, this.x, this.y);
+            }
+        }
+
+        function init() {
+            for (let i = 0; i < 100; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function handleParticles() {
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+
+                if (particles[i].size <= 0.2) {
+                    particles.splice(i, 1);
+                    i--;
+                    particles.push(new Particle());
+                }
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            handleParticles();
+            requestAnimationFrame(animate);
+        }
+
+        init();
+        animate();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+       function openChat() {
+            document.getElementById('chatBox').style.display = 'block';
+        }
+
+        function closeChat() {
+            document.getElementById('chatBox').style.display = 'none';
+        }
+
+
+    </script>
+</body>
+</html>

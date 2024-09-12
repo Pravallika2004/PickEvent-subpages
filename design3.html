@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Designer Studio</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    .header {
+        background-color: #333;
+        color: white;
+        padding: 15px;
+        text-align: center;
+    }
+
+    .navigation {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 20px;
+        background-color: #f4f4f4;
+        flex-wrap: wrap;
+    }
+
+    .navigation button, .navigation select, .navigation input[type="range"] {
+        padding: 10px;
+        margin-right: 10px;
+        font-size: 16px;
+        background-color: #87CEEB;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .navigation button:hover, .navigation select:hover, .navigation input[type="range"]:hover {
+        background-color: #00BFFF;
+    }
+
+    .search-bar {
+        display: flex;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .search-bar input[type="text"] {
+        padding: 10px;
+        width: 300px;
+        font-size: 16px;
+    }
+
+    .search-bar button {
+        padding: 10px;
+        margin-left: 10px;
+        font-size: 16px;
+        background-color: #87CEEB;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .search-bar button:hover {
+        background-color: #00BFFF;
+    }
+
+    .studio-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        padding: 20px;
+    }
+
+    .studio {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        overflow: hidden;
+        margin: 10px;
+        width: 300px;
+        position: relative;
+    }
+
+    .studio img {
+        width: 100%;
+        height: auto;
+    }
+
+    .studio-details {
+        padding: 15px;
+        text-align: center;
+    }
+
+    .star-rating {
+        display: flex;
+        justify-content: center;
+        margin: 10px 0;
+    }
+
+    .star-rating .star {
+        font-size: 24px;
+        color: grey;
+        cursor: pointer;
+    }
+
+    .star-rating .star:hover, 
+    .star-rating .star:hover ~ .star {
+        color: yellow;
+    }
+
+    .star-rating .selected {
+        color: yellow;
+    }
+
+    .popup-button {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 16px;
+        color: white;
+        background-color: purple;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+    .popup-button:hover {
+        background-color: red;
+    }
+
+    .price {
+        font-size: 16px;
+        color: green;
+        margin-top: 5px;
+    }
+</style>
+</head>
+<body>
+
+<div class="header">
+    <h1>Designer Studio</h1>
+</div>
+
+<div class="navigation">
+    <div>
+        <button onclick="filterCategory('all')">All</button>
+        <button onclick="filterCategory('frocks')">Frocks</button>
+        <button onclick="filterCategory('lehangas')">Lehangas</button>
+        <button onclick="filterCategory('sarees')">Sarees</button>
+        <button onclick="filterCategory('kurthis')">Kurthis</button>
+        <button onclick="filterCategory('duppatas')">Duppatas</button>
+    </div>
+    <div>
+        <select onchange="filterEvent(this.value)">
+            <option value="">Select Event</option>
+            <option value="party">Party</option>
+            <option value="sangeeth">Sangeeth</option>
+            <option value="marriage">Marriage</option>
+            <option value="cocktail-party">Cocktail Party</option>
+            <option value="kitty-party">Kitty Party</option>
+        </select>
+        <input type="range" min="1" max="100" value="50" class="slider" id="budgetRange">
+        <label for="budgetRange">Budget</label>
+        <select id="type-select" onchange="toggleTypeOptions()">
+            <option value="">Select Type</option>
+            <option value="ready-made">Ready-Made</option>
+            <option value="customized">Customized</option>
+        </select>
+        <select id="size-select" style="display: none;">
+            <option value="">Select Size</option>
+            <option value="s">S</option>
+            <option value="m">M</option>
+            <option value="l">L</option>
+            <option value="xl">XL</option>
+            <option value="xxl">XXL</option>
+            <option value="free-size">Free Size</option>
+        </select>
+        <select id="design-select" style="display: none;" onchange="filterDesign(this.value)">
+            <option value="">Select Design Type</option>
+            <option value="all">All</option>
+            <option value="kalamkari">Kalamkari Print Works</option>
+            <option value="jardha">Jardha</option>
+            <option value="cotton-weaving">Cotton Weavings</option>
+            <option value="magam">Maagam Work</option>
+        </select>
+    </div>
+</div>
+
+<div class="search-bar">
+    <input type="text" placeholder="Search...">
+    <button>Search</button>
+</div>
+
+<div class="studio-container" id="studio-container">
+    <!-- Placeholder for dynamically generated studio items -->
+</div>
+
+<script>
+    function toggleTypeOptions() {
+        const typeSelect = document.getElementById('type-select');
+        const sizeSelect = document.getElementById('size-select');
+        const designSelect = document.getElementById('design-select');
+
+        if (typeSelect.value === 'ready-made') {
+            sizeSelect.style.display = 'inline-block';
+            designSelect.style.display = 'none';
+        } else if (typeSelect.value === 'customized') {
+            sizeSelect.style.display = 'none';
+            designSelect.style.display = 'inline-block';
+        } else {
+            sizeSelect.style.display = 'none';
+            designSelect.style.display = 'none';
+        }
+    }
+
+    const stars = document.querySelectorAll('.star');
+    stars.forEach(star => {
+        star.addEventListener('click', () => {
+            let rating = star.getAttribute('data-rating');
+            setRating(rating, star.parentElement);
+        });
+    });
+
+    function setRating(rating, parent) {
+        const stars = parent.querySelectorAll('.star');
+        stars.forEach(star => {
+            if (star.getAttribute('data-rating') <= rating) {
+                star.classList.add('selected');
+            } else {
+                star.classList.remove('selected');
+            }
+        });
+    }
+
+    function openPopup() {
+        alert("This will open a popup to add to cart or chat.");
+    }
+
+    function filterCategory(category) {
+        const studios = document.querySelectorAll('.studio');
+        studios.forEach(studio => {
+            if (category === 'all' || studio.getAttribute('data-category') === category) {
+                studio.style.display = 'block';
+            } else {
+                studio.style.display = 'none';
+            }
+        });
+    }
+
+    function filterEvent(event) {
+        const studios = document.querySelectorAll('.studio');
+        studios.forEach(studio => {
+            if (event === '' || studio.getAttribute('data-event') === event) {
+                studio.style.display = 'block';
+            } else {
+                studio.style.display = 'none';
+            }
+        });
+    }
+
+    function filterDesign(design) {
+        const studios = document.querySelectorAll('.studio');
+        studios.forEach(studio => {
+            if (design === 'all' || studio.getAttribute('data-design') === design) {
+                studio.style.display = 'block';
+            } else {
+                studio.style.display = 'none';
+            }
+        });
+    }
+
+    // Dummy data generation for example purposes
+    function generateDummyData() {
+        const categories = ['frocks', 'lehangas', 'sarees', 'kurthis', 'duppatas'];
+        const events = ['party', 'sangeeth', 'marriage', 'cocktail-party', 'kitty-party'];
+        const designs = ['kalamkari', 'jardha', 'cotton-weaving', 'magam'];
+        const container = document.getElementById('studio-container');
+
+        for (let i = 0; i < 75; i++) {
+            const category = categories[i % categories.length];
+            const event = events[i % events.length];
+            const design = designs[i % designs.length];
+            const price = Math.floor(Math.random() * 500) + 50;
+
+            const studio = document.createElement('div');
+            studio.className = 'studio';
+            studio.setAttribute('data-category', category);
+            studio.setAttribute('data-event', event);
+            studio.setAttribute('data-design', design);
+
+            studio.innerHTML = `
+                <img src="https://via.placeholder.com/300x200" alt="Designer Work ${i + 1}">
+                <div class="studio-details">
+                    <h2>Studio Name ${i + 1}</h2>
+                    <div class="star-rating">
+                        <span class="star" data-rating="1">&#9733;</span>
+                        <span class="star" data-rating="2">&#9733;</span>
+                        <span class="star" data-rating="3">&#9733;</span>
+                        <span class="star" data-rating="4">&#9733;</span>
+                        <span class="star" data-rating="5">&#9733;</span>
+                    </div>
+                    <div class="price">Starting from: $${price}</div>
+                    <button class="popup-button" onclick="openPopup()">Add to Cart</button>
+                </div>
+            `;
+
+            container.appendChild(studio);
+        }
+    }
+
+    // Generate dummy data on page load
+    window.onload = generateDummyData;
+</script>
+
+</body>
+</html>

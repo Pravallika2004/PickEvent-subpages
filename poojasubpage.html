@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pooja Items Store</title>
+    <link rel="stylesheet" href="styles.css">
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #f8e6e0;
+    padding: 20px;
+    text-align: center;
+}
+
+.search-section {
+    text-align: center;
+    margin: 20px 0;
+}
+
+#searchBox {
+    padding: 10px;
+    width: 300px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #c9302c;
+}
+
+.items-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin: 20px;
+}
+
+.item {
+    background-color: white;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: center;
+    width: 200px;
+}
+
+.item img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.payment-section {
+    text-align: center;
+    margin: 20px 0;
+}
+</style>
+</head>
+<body>
+    <header>
+        <h1>Pooja Items Store</h1>
+    </header>
+
+    <section class="search-section">
+        <input type="text" id="searchBox" placeholder="Search for pooja items...">
+        <button onclick="searchItems()">Search</button>
+    </section>
+
+    <section class="items-section" id="itemsSection">
+        <!-- Items will be dynamically added here -->
+    </section>
+
+    <section class="payment-section">
+        <select id="paymentMethod">
+            <option value="cashOnDelivery">Cash on Delivery</option>
+            <option value="onlinePayment">Online Payment</option>
+        </select>
+        <button onclick="submitOrder()">Submit</button>
+    </section>
+
+    <script src="script.js"></script>
+<script>
+const items = [
+    { id: 1, name: 'FlowerMala', image: 'flowermala.jpg', cost: 350, store: 'Store A' },
+    { id: 2, name: 'Diyas', image: 'diyas.jpg', cost: 70, store: 'Store B' },
+    { id: 3, name: 'Coconut', image: 'coconut.jpg', cost: 20, store: 'Store C' },
+    // Add more items as needed
+];
+
+let cart = [];
+
+document.addEventListener('DOMContentLoaded', () => {
+    displayItems(items);
+});
+
+function displayItems(items) {
+    const itemsSection = document.getElementById('itemsSection');
+    itemsSection.innerHTML = '';
+    items.forEach(item => {
+        itemsSection.innerHTML += `
+            <div class="item">
+                <img src="${item.image}" alt="${item.name}">
+                <h3>${item.name}</h3>
+                <p>Cost: ₹${item.cost}</p>
+                <p>Store: ${item.store}</p>
+                <input type="number" id="quantity-${item.id}" placeholder="Quantity" min="1">
+                <button onclick="addToCart(${item.id})">Add to Cart</button>
+            </div>
+        `;
+    });
+}
+
+function searchItems() {
+    const searchBox = document.getElementById('searchBox').value.toLowerCase();
+    const filteredItems = items.filter(item => item.name.toLowerCase().includes(searchBox));
+    displayItems(filteredItems);
+}
+
+function addToCart(itemId) {
+    const quantity = document.getElementById(`quantity-${itemId}`).value;
+    if (quantity > 0) {
+        const item = items.find(item => item.id === itemId);
+        cart.push({ ...item, quantity: parseInt(quantity) });
+        alert(`Added ${quantity} ${item.name}(s) from ${item.store} to cart`);
+    } else {
+        alert('Please enter a valid quantity');
+    }
+}
+
+function submitOrder() {
+    const paymentMethod = document.getElementById('paymentMethod').value;
+    if (cart.length === 0) {
+        alert('Your cart is empty');
+        return;
+    }
+    let orderSummary = 'Order Summary:\n\n';
+    cart.forEach(item => {
+        orderSummary += `${item.quantity} x ${item.name} from ${item.store} - ₹${item.cost * item.quantity}\n`;
+    });
+    orderSummary += `\nPayment Method: ${paymentMethod === 'cashOnDelivery' ? 'Cash on Delivery' : 'Online Payment'}`;
+    alert(orderSummary);
+}
+</script>
+</body>
+</html>

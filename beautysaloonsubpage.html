@@ -1,0 +1,270 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Makeup Artist and Beauty Salon Booking</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #00008B;
+            background: linear-gradient(to right, blue, grey);
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        h2 {
+            font-size: 1.5em;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .stars {
+            display: flex;
+            cursor: pointer;
+        }
+
+        .star {
+            font-size: 2em;
+            color: black;
+            transition: color 0.2s;
+        }
+
+        .star:hover,
+        .star.selected {
+            color: red;
+        }
+
+        .Artist p {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .categories ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .categories li {
+            margin: 10px 0;
+        }
+
+        button {
+            background-color: #4169E1;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #1E90FF;
+        }
+
+        .booking-options {
+            margin-top: 20px;
+        }
+
+        #confirmButton {
+            background-color: #4169E1;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #confirmButton:hover {
+            background-color: #1E90FF;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        select, textarea, input[type="range"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .offer-box {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #f0f0f0;
+        }
+
+        .packages {
+            margin-top: 20px;
+        }
+
+        .packages label {
+            display: block;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Makeup Artist and Beauty Salon Booking</h1>
+        <div class="Artist">
+            <h2>Destroy Saloon</h2>
+            <div class="PMK">
+                <img src="artist1.jpg" alt="Artist 1">
+                <div class="stars" id="stars">
+                    <span class="star" data-value="1">&#9733;</span>
+                    <span class="star" data-value="2">&#9733;</span>
+                    <span class="star" data-value="3">&#9733;</span>
+                    <span class="star" data-value="4">&#9733;</span>
+                    <span class="star" data-value="5">&#9733;</span>
+                </div>
+                <p>Artist/Salon Name 1</p>
+                <label><input type="checkbox" name="gender" value="men"> Men</label>
+                <label><input type="checkbox" name="gender" value="women"> Women</label>
+                <label><input type="checkbox" name="gender" value="other"> Other</label>
+                <div class="categories">
+                    <h3>Categories</h3>
+                    <ul>
+                        <li><label><input type="checkbox" name="category" value="makeup"> Makeup</label></li>
+                        <li><label><input type="checkbox" name="category" value="hair_styling"> Hair Styling</label></li>
+                        <li><label><input type="checkbox" name="category" value="nail_art"> Nail Art</label></li>
+                        <li><label><input type="checkbox" name="category" value="mehndi"> Mehndi</label></li>
+                        <li><label><input type="checkbox" name="category" value="waxing"> Waxing</label></li>
+                        <li><label><input type="checkbox" name="category" value="spa"> Spa</label></li>
+                        <li><label><input type="checkbox" name="category" value="facials"> Facials</label></li>
+                        <li><label><input type="checkbox" name="category" value="body_polishing"> Body Polishing</label></li>
+                        <li><label><input type="checkbox" name="category" value="de_tan"> De-tan</label></li>
+                        <li><label><input type="checkbox" name="category" value="body_bleach"> Body Bleach</label></li>
+                        <li><label><input type="checkbox" name="category" value="pedicure"> Pedicure</label></li>
+                        <li><label><input type="checkbox" name="category" value="manicure"> Manicure</label></li>
+                        <li><label><input type="checkbox" name="category" value="saree_drapping"> Saree Draping</label></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="booking-options">
+            <h2>Booking Options</h2>
+            <label for="category">Category:</label>
+            <select id="category" name="category">
+                <option value="bride">Bride</option>
+                <option value="groom">Groom</option>
+                <option value="both">Both</option>
+                <option value="normal">Normal</option>
+                <option value="other">Other</option>
+            </select>
+            <label for="comments">Comments:</label>
+            <textarea id="comments" placeholder="Enter any special requests or comments..."></textarea>
+            <label for="numPeople">Number of People:</label>
+            <input type="range" id="numPeople" name="numPeople" min="1" max="10" value="1" oninput="updatePeopleCount(this.value)">
+            <span id="peopleCount">1</span>
+            <div class="special-offers">
+                <h3>Special Offers</h3>
+                <div class="offer-box" id="offerDisplay">
+                    <!-- Offers will be displayed here -->
+                </div>
+                <div class="offer-box">
+                    <label for="offerInput">Type your offer:</label>
+                    <input type="text" id="offerInput">
+                    <button onclick="applyOffer()">Apply</button>
+                </div>
+            </div>
+            <div class="packages">
+                <h3>Packages</h3>
+                <label><input type="checkbox" name="package" value="package1"> Package 1: $200
+                    <ul>
+                        <li>Makeup</li>
+                        <li>Hair Styling</li>
+                        <li>Nail Art</li>
+                    </ul>
+                </label>
+                <label><input type="checkbox" name="package" value="package2"> Package 2: $300
+                    <ul>
+                        <li>Spa</li>
+                        <li>Facials</li>
+                        <li>Body Polishing</li>
+                    </ul>
+                </label>
+                <label><input type="checkbox" name="package" value="package3"> Package 3: $150
+                    <ul>
+                        <li>Waxing</li>
+                        <li>Pedicure</li>
+                        <li>Manicure</li>
+                    </ul>
+                </label>
+            </div>
+            <button id="confirmButton">Confirm Booking</button>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const stars = document.querySelectorAll('.star');
+            stars.forEach(star => {
+                star.addEventListener('click', () => {
+                    const rating = star.getAttribute('data-value');
+                    stars.forEach(s => {
+                        s.classList.remove('selected');
+                        if (s.getAttribute('data-value') <= rating) {
+                            s.classList.add('selected');
+                        }
+                    });
+                });
+            });
+
+            // Simulated offers
+            const offers = [
+                "10% off on bridal makeup!",
+                "Free nail art with every facial!",
+                "50% off on spa treatments!"
+            ];
+
+            let index = 0;
+            setInterval(() => {
+                document.getElementById('offerDisplay').textContent = offers[index];
+                index = (index + 1) % offers.length;
+            }, 10000);
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const stars = document.querySelectorAll('.star');
+            stars.forEach(star => {
+                star.addEventListener('click', () => {
+                    const rating = star.getAttribute('data-value');
+                    stars.forEach(s => {
+                        s.classList.remove('selected');
+                        if (s.getAttribute('data-value') <= rating) {
+                            s.classList.add('selected');
+                        }
+                    });
+                });
+            });
+        });
+
+        function updatePeopleCount(value) {
+            document.getElementById('peopleCount').textContent = value;
+        }
+    </script>
+
+
+

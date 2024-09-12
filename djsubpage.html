@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DJ Listings</title>
+    <link rel="stylesheet" href="styles.css">
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom right, palegreen, palevioletred);
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+h1, h2, h3 {
+    text-align: center;
+    margin: 20px 0;
+    color: #fff;
+}
+
+#dj-listings {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 20px;
+}
+
+.dj-item {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.dj-item:hover {
+    transform: scale(1.05);
+}
+
+#dj-details {
+    margin: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.dj-info {
+    border: 1px solid #ddd;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.dj-images img {
+    max-width: 100px;
+    margin: 5px;
+    border-radius: 5px;
+}
+
+.dj-videos iframe {
+    width: 200px;
+    height: 100px;
+    margin: 5px;
+    border-radius: 5px;
+}
+
+.star-rating {
+    display: inline-block;
+    font-size: 24px;
+    color: grey;
+    cursor: pointer;
+}
+
+.star-rating span {
+    color: grey;
+}
+
+.star-rating span:hover,
+.star-rating span:hover ~ span,
+.star-rating .selected {
+    color: yellow;
+}
+
+.dj-equipment label, .dj-equipment select, .dj-equipment input {
+    display: block;
+    margin: 5px 0;
+}
+
+.submit-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.submit-button:hover {
+    background-color: #45a049;
+}
+
+#chat-box {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 300px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 1px solid #ddd;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    border-radius: 5px;
+}
+
+#chat-content {
+    max-height: 200px;
+    overflow-y: scroll;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
+}
+
+#chat-input {
+    width: calc(100% - 50px);
+}
+
+#send-chat {
+    width: 40px;
+}
+
+#offer-box {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 300px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 1px solid #ddd;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    border-radius: 5px;
+}
+
+#offer-box h3 {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#offer-code-popup {
+    width: calc(100% - 50px);
+    padding: 5px;
+    margin-top: 10px;
+}
+
+#apply-offer-popup {
+    padding: 5px 10px;
+    margin-top: 10px;
+}
+
+.highlight-text {
+    color: red;
+    background-color: white;
+    font-weight: bold;
+}
+
+.offer-code {
+    background-color: yellow;
+}
+
+#queries-button {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#queries-button:hover {
+    background-color: #45a049;
+}
+</style>
+</head>
+<body>
+    <h1>DJ Listings</h1>
+    <div id="dj-listings"></div>
+    
+    <div id="dj-details">
+        <h2>DJ Name</h2>
+        <div class="dj-info">
+            <div class="dj-images">
+                <!-- Images will be loaded here -->
+            </div>
+            <div class="dj-videos">
+                <!-- YouTube videos will be embedded here -->
+            </div>
+            <div class="dj-rating">
+                <span class="star-rating"></span>
+            </div>
+            <p><strong>Cost: $<span id="dj-cost" class="highlight-text"></span></strong></p>
+            <p><strong>Location: <span id="dj-location" class="highlight-text"></span></strong></p>
+            <div class="dj-equipment">
+                <label for="controllers" class="highlight-text">No of DJ Controllers:</label>
+                <select id="controllers">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+                
+                <label for="lights" class="highlight-text">No of Lights:</label>
+                <select id="lights">
+                    <option value="0">0</option>
+                    <option value="2">2</option>
+                    <option value="4">4</option>
+                    <option value="6">6</option>
+                </select>
+                
+                <label for="pin" class="highlight-text">Pin Count:</label>
+                <input type="text" id="pin">
+                
+                <label for="smoke" class="highlight-text">Smoke Equipment:</label>
+                <input type="checkbox" id="smoke">
+                
+                <label for="paper-flow" class="highlight-text">Paper Flow:</label>
+                <input type="checkbox" id="paper-flow">
+                
+                <label for="extra-things" class="highlight-text">Extra Things:</label>
+                <input type="text" id="extra-things" placeholder="Type here...">
+                
+                <label for="crackers" class="highlight-text">Crackers:</label>
+                <input type="checkbox" id="crackers">
+                <div id="crackers-options" style="display: none;">
+                    <label for="rockets" class="highlight-text">Rocket:</label>
+                    <input type="checkbox" id="rockets">
+                    <label for="sparkles" class="highlight-text">Sparkles:</label>
+                    <input type="checkbox" id="sparkles">
+                    <label for="other-crackers" class="highlight-text">Other:</label>
+                    <input type="checkbox" id="other-crackers">
+                </div>
+                
+                <label for="offer-code" class="highlight-text">Offer Code:</label>
+                <input type="text" id="offer-code" placeholder="Enter offer code" class="offer-code">
+                <button id="apply-offer" class="submit-button">Apply Offer</button>
+            </div>
+            <label for="upload-location" class="highlight-text">Upload Location Image:</label>
+            <input type="file" id="upload-location">
+            
+            <button id="submit" class="submit-button">Submit</button>
+            <p><strong>Overall Cost: $<span id="overall-cost"></span></strong></p>
+        </div>
+    </div>
+    
+    <div id="chat-box" style="display: none;">
+        <h3>Chat Box <button id="close-chat">Close</button></h3>
+        <div id="chat-content"></div>
+        <input type="text" id="chat-input">
+        <button id="send-chat">Send</button>
+    </div>
+    
+    
+    </div>
+<button id="queries-button">Any Queries?</button>
+
+    <script src="script.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const djListings = [
+        {
+            name: "DJ Example",
+            images: ["img1.jpg", "img2.jpg"],
+            videos: ["https://www.youtube.com/embed/video1", "https://www.youtube.com/embed/video2"],
+            rating: 4,
+            cost: 200,
+            location: "New York"
+        }
+    ];
+    
+    const djListingsContainer = document.getElementById('dj-listings');
+    const djDetails = document.getElementById('dj-details');
+    const starRating = document.querySelector('.star-rating');
+    const chatBox = document.getElementById('chat-box');
+    const chatContent = document.getElementById('chat-content');
+    const chatInput = document.getElementById('chat-input');
+    const sendChat = document.getElementById('send-chat');
+    const closeChat = document.getElementById('close-chat');
+    const crackers = document.getElementById('crackers');
+    const crackersOptions = document.getElementById('crackers-options');
+    const offerBox = document.getElementById('offer-box');
+    const closeOffer = document.getElementById('close-offer');
+    const queriesButton = document.getElementById('queries-button');
+
+    // Load DJ Listings
+    djListings.forEach(dj => {
+        const djItem = document.createElement('div');
+        djItem.classList.add('dj-item');
+        djItem.textContent = dj.name;
+        djItem.addEventListener('click', () => loadDJDetails(dj));
+        djListingsContainer.appendChild(djItem);
+    });
+
+    // Load DJ Details
+    function loadDJDetails(dj) {
+        djDetails.querySelector('h2').textContent = dj.name;
+        const djImages = djDetails.querySelector('.dj-images');
+        const djVideos = djDetails.querySelector('.dj-videos');
+        djImages.innerHTML = '';
+        djVideos.innerHTML = '';
+        
+        dj.images.forEach(image => {
+            const img = document.createElement('img');
+            img.src = image;
+            djImages.appendChild(img);
+        });
+
+        dj.videos.forEach(video => {
+            const iframe = document.createElement('iframe');
+            iframe.src = video;
+            djVideos.appendChild(iframe);
+        });
+
+        starRating.innerHTML = '';
+        for (let i = 0; i < 5; i++) {
+            const star = document.createElement('span');
+            star.textContent = '★';
+            star.style.color = i < dj.rating ? 'yellow' : 'grey';
+            starRating.appendChild(star);
+        }
+
+        document.getElementById('dj-cost').textContent = dj.cost;
+        document.getElementById('dj-location').textContent = dj.location;
+    }
+
+    // Show/Hide crackers options
+    crackers.addEventListener('change', () => {
+        crackersOptions.style.display = crackers.checked ? 'block' : 'none';
+    });
+
+    // Chat Functionality
+    sendChat.addEventListener('click', () => {
+        const message = chatInput.value;
+        if (message) {
+            const messageElem = document.createElement('div');
+            messageElem.textContent = message;
+            chatContent.appendChild(messageElem);
+            chatInput.value = '';
+        }
+    });
+
+    closeChat.addEventListener('click', () => {
+        chatBox.style.display = 'none';
+    });
+
+    queriesButton.addEventListener('click', () => {
+        chatBox.style.display = 'block';
+    });
+
+    // Offer box functionality
+    function showOfferBox() {
+        offerBox.style.display = 'block';
+    }
+
+    closeOffer.addEventListener('click', () => {
+        offerBox.style.display = 'none';
+    });
+
+    setInterval(showOfferBox, 10000);
+});
+</script>
+</body>
+</html>

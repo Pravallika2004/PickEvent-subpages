@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decoration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        
+        .header {
+            background-color: #333;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .header img {
+            height: 50px;
+            vertical-align: middle;
+        }
+        
+        .container {
+            padding: 20px;
+        }
+        
+        .work-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+        
+        .work-gallery img {
+            width: 200px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        
+        .dropdown {
+            margin: 20px 0;
+        }
+        
+        .dropdown select {
+            padding: 10px;
+            font-size: 16px;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        
+        .buttons button {
+            padding: 15px 25px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+        }
+        
+        .add-to-cart {
+            background-color: #28a745;
+            color: white;
+        }
+        
+        .call-us {
+            background-color: #007bff;
+            color: white;
+        }
+        
+        .chat-with-us {
+            background-color: #ffc107;
+            color: white;
+        }
+        
+        #chat-box {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            right: 20px;
+            width: 300px;
+            border: 1px solid #ccc;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        #chat-box header {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        
+        #chat-box .messages {
+            padding: 10px;
+            height: 200px;
+            overflow-y: scroll;
+        }
+        
+        #chat-box .input-group {
+            display: flex;
+        }
+        
+        #chat-box .input-group input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-top: 1px solid #ccc;
+        }
+        
+        #chat-box .input-group button {
+            padding: 10px;
+            border: none;
+            background-color: #333;
+            color: white;
+        }
+<body>
+    <div class="header">
+        <img src="logo.png" alt="Decor Organization Logo">
+        <h1>DecorPro</h1>
+    </div>
+    
+    <div class="container">
+        <h2>Our Work</h2>
+        <div class="work-gallery">
+<style>
+        .stars {
+            display: flex;
+            cursor: pointer;
+        }
+
+        .star {
+            font-size: 2em;
+            color: Black;
+            transition: color 0.2s;
+        }
+
+        .star:hover,
+        .star.selected {
+            color: red;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="header">
+        <img src="logo.png" alt="Decor Organization Logo">
+        <h1>DecorPro</h1>
+<div class="stars" id="stars">
+        <span class="star" data-value="1">&#9733;</span>
+        <span class="star" data-value="2">&#9733;</span>
+        <span class="star" data-value="3">&#9733;</span>
+        <span class="star" data-value="4">&#9733;</span>
+        <span class="star" data-value="5">&#9733;</span>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const stars = document.querySelectorAll('.star');
+            stars.forEach(star => {
+                star.addEventListener('click', () => {
+                    const rating = star.getAttribute('data-value');
+                    stars.forEach(s => {
+                        s.classList.remove('selected');
+                        if (s.getAttribute('data-value') <= rating) {
+                            s.classList.add('selected');
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+
+
+    </div>
+    <div class="container">
+        <h2>Our Gallery</h2>
+        <div class="work-gallery">
+  
+            <img src="flower.jpg" alt="Work 1">
+            <img src="balllonss.jpg" alt="Work 2">
+            <img src="cloth.jpg" alt="Work 3">
+            <img src="lights.jpg" alt="Work 4">
+        </div>
+        
+        <!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Theme</title>
+    <style>
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .selected-option {
+            padding: 12px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+
+        .custom-theme {
+            display: none;
+            margin-top: 10px;
+        }
+
+        .custom-theme input {
+            padding: 8px;
+            width: calc(100% - 16px);
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+
+<div class="dropdown">
+    <div class="selected-option" id="selected-option">Select a theme</div>
+    <div class="dropdown-content" id="dropdown-content">
+        <a href="#" data-value="flowers">flowers</a>
+        <a href="#" data-value="cloths">cloyhs</a>
+        <a href="#" data-value="lights">lights</a>
+        <a href="#" data-value="ballons">ballons</a>
+        <a href="#" data-value="other">Other</a>
+    </div>
+</div>
+
+<div class="custom-theme" id="custom-theme">
+    <label for="custom-theme-input">Enter custom theme:</label>
+    <input type="text" id="custom-theme-input" placeholder="Custom theme">
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const selectedOption = document.getElementById('selected-option');
+        const dropdownContent = document.getElementById('dropdown-content');
+        const options = dropdownContent.querySelectorAll('a');
+        const customTheme = document.getElementById('custom-theme');
+        const customThemeInput = document.getElementById('custom-theme-input');
+
+        options.forEach(option => {
+            option.addEventListener('click', (event) => {
+                event.preventDefault();
+                const value = option.getAttribute('data-value');
+                selectedOption.textContent = value;
+                if (value === 'Other') {
+                    customTheme.style.display = 'block';
+                } else {
+                    customTheme.style.display = 'none';
+                    customThemeInput.value = '';
+                }
+            });
+        });
+
+        customThemeInput.addEventListener('input', () => {
+            selectedOption.textContent = customThemeInput.value;
+        });
+    });
+</script>
+
+        
+        <div class="buttons">
+            <button class="add-to-cart">Add to Cart</button>
+            <button class="call-us">Call Us</button>
+            <button class="chat-with-us" onclick="toggleChat()">Chat with Us</button>
+        </div>
+    </div>
+    
+    <div id="chat-box">
+        <header>Live Chat</header>
+        <div class="messages" id="chat-messages"></div>
+        <div class="input-group">
+            <input type="text" id="chat-input" placeholder="Type a message...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+    
+    <script>
+        function toggleChat() {
+            const chatBox = document.getElementById('chat-box');
+            chatBox.style.display = chatBox.style.display === 'block' ? 'none' : 'block';
+        }
+        
+        function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const messages = document.getElementById('chat-messages');
+            const messageText = input.value.trim();
+            if (messageText) {
+                const message = document.createElement('div');
+                message.textContent = messageText;
+                messages.appendChild(message);
+                input.value = '';
+                recordChat(messageText);
+            }
+        }
+        
+        function recordChat(message) {
+            console.log('Recorded message:', message); // Replace this with actual recording logic
+        }
+    </script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decoration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        
+        .header {
+            background-color: #333;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .header img {
+            height: 50px;
+            vertical-align: middle;
+        }
+        
+        .container {
+            padding: 20px;
+        }
+        
+        .work-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+        
+        .work-gallery img {
+            width: 200px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        
+        .dropdown {
+            margin: 20px 0;
+        }
+        
+        .dropdown select {
+            padding: 10px;
+            font-size: 16px;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        
+        .buttons button {
+            padding: 15px 25px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+        }
+        
+        .add-to-cart {
+            background-color: #28a745;
+            color: white;
+        }
+        
+        .call-us {
+            background-color: #007bff;
+            color: white;
+        }
+        
+        .chat-with-us {
+            background-color: #ffc107;
+            color: white;
+        }
+        
+        #chat-box {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            right: 20px;
+            width: 300px;
+            border: 1px solid #ccc;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        #chat-box header {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        
+        #chat-box .messages {
+            padding: 10px;
+            height: 200px;
+            overflow-y: scroll;
+        }
+        
+        #chat-box .input-group {
+            display: flex;
+        }
+        
+        #chat-box .input-group input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-top: 1px solid #ccc;
+        }
+        
+        #chat-box .input-group button {
+            padding: 10px;
+            border: none;
+            background-color: #333;
+            color: white;
+        }
+<body>
+    <div class="header">
+        <img src="logo.png" alt="Decor Organization Logo">
+        <h1>DecorPro</h1>
+    </div>
+    
+    <div class="container">
+        <h2>Our Work</h2>
+        <div class="work-gallery">
+<style>
+        .stars {
+            display: flex;
+            cursor: pointer;
+        }
+
+        .star {
+            font-size: 2em;
+            color: Black;
+            transition: color 0.2s;
+        }
+
+        .star:hover,
+        .star.selected {
+            color: red;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="header">
+        <img src="logo.png" alt="Decor Organization Logo">
+        <h1>DecorPro</h1>
+<div class="stars" id="stars">
+        <span class="star" data-value="1">&#9733;</span>
+        <span class="star" data-value="2">&#9733;</span>
+        <span class="star" data-value="3">&#9733;</span>
+        <span class="star" data-value="4">&#9733;</span>
+        <span class="star" data-value="5">&#9733;</span>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const stars = document.querySelectorAll('.star');
+            stars.forEach(star => {
+                star.addEventListener('click', () => {
+                    const rating = star.getAttribute('data-value');
+                    stars.forEach(s => {
+                        s.classList.remove('selected');
+                        if (s.getAttribute('data-value') <= rating) {
+                            s.classList.add('selected');
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+
+
+    </div>
+    <div class="container">
+        <h2>Our Gallery</h2>
+        <div class="work-gallery">
+  
+            <img src="flower.jpg" alt="Work 1">
+            <img src="balllonss.jpg" alt="Work 2">
+            <img src="cloth.jpg" alt="Work 3">
+            <img src="lights.jpg" alt="Work 4">
+        </div>
+        
+        <!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Theme</title>
+    <style>
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .selected-option {
+            padding: 12px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+
+        .custom-theme {
+            display: none;
+            margin-top: 10px;
+        }
+
+        .custom-theme input {
+            padding: 8px;
+            width: calc(100% - 16px);
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+
+<div class="dropdown">
+    <div class="selected-option" id="selected-option">Select a theme</div>
+    <div class="dropdown-content" id="dropdown-content">
+        <a href="#" data-value="flowers">flowers</a>
+        <a href="#" data-value="cloths">cloyhs</a>
+        <a href="#" data-value="lights">lights</a>
+        <a href="#" data-value="ballons">ballons</a>
+        <a href="#" data-value="other">Other</a>
+    </div>
+</div>
+
+<div class="custom-theme" id="custom-theme">
+    <label for="custom-theme-input">Enter custom theme:</label>
+    <input type="text" id="custom-theme-input" placeholder="Custom theme">
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const selectedOption = document.getElementById('selected-option');
+        const dropdownContent = document.getElementById('dropdown-content');
+        const options = dropdownContent.querySelectorAll('a');
+        const customTheme = document.getElementById('custom-theme');
+        const customThemeInput = document.getElementById('custom-theme-input');
+
+        options.forEach(option => {
+            option.addEventListener('click', (event) => {
+                event.preventDefault();
+                const value = option.getAttribute('data-value');
+                selectedOption.textContent = value;
+                if (value === 'Other') {
+                    customTheme.style.display = 'block';
+                } else {
+                    customTheme.style.display = 'none';
+                    customThemeInput.value = '';
+                }
+            });
+        });
+
+        customThemeInput.addEventListener('input', () => {
+            selectedOption.textContent = customThemeInput.value;
+        });
+    });
+</script>
+
+        
+        <div class="buttons">
+            <button class="add-to-cart">Add to Cart</button>
+            <button class="call-us">Call Us</button>
+            <button class="chat-with-us" onclick="toggleChat()">Chat with Us</button>
+        </div>
+    </div>
+    
+    <div id="chat-box">
+        <header>Live Chat</header>
+        <div class="messages" id="chat-messages"></div>
+        <div class="input-group">
+            <input type="text" id="chat-input" placeholder="Type a message...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+    
+    <script>
+        function toggleChat() {
+            const chatBox = document.getElementById('chat-box');
+            chatBox.style.display = chatBox.style.display === 'block' ? 'none' : 'block';
+        }
+        
+        function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const messages = document.getElementById('chat-messages');
+            const messageText = input.value.trim();
+            if (messageText) {
+                const message = document.createElement('div');
+                message.textContent = messageText;
+                messages.appendChild(message);
+                input.value = '';
+                recordChat(messageText);
+            }
+        }
+        
+        function recordChat(message) {
+            console.log('Recorded message:', message); // Replace this with actual recording logic
+        }
+    </script>
+</body>
+</html>

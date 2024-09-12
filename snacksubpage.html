@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snacks and Drinks Shop</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Snacks and Drinks Shop</h1>
+        <input type="text" id="search-bar" placeholder="Search for shop or item...">
+        <button onclick="searchItems()">Search</button>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+header {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.filters {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.filters label, .filters select {
+    margin: 0 10px;
+}
+
+.food-categories, .drink-categories {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.food-categories label, .drink-categories label {
+    margin: 0 10px;
+}
+
+#items-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.item {
+    border: 1px solid #ddd;
+    margin: 10px;
+    padding: 10px;
+    width: 200px;
+    text-align: center;
+}
+
+#cart {
+    margin: 20px;
+}
+
+#cart-items {
+    list-style: none;
+    padding: 0;
+}
+
+#cart-items li {
+    margin: 10px 0;
+}
+
+#cart button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#cart button:hover {
+    background-color: #45a049;
+}
+</style>
+    </header>
+    <div class="filters">
+        <label><input type="checkbox" id="food-checkbox"> Food</label>
+        <select id="food-type" disabled>
+            <option value="veg">Veg</option>
+            <option value="nonveg">Non-Veg</option>
+        </select>
+        <label><input type="checkbox" id="drinks-checkbox"> Drinks</label>
+    </div>
+    <div class="food-categories" id="food-categories" style="display:none;">
+        <label><input type="radio" name="food-category" value="soups"> Soups</label>
+        <label><input type="radio" name="food-category" value="starters"> Starters</label>
+        <!-- Add more categories as needed -->
+    </div>
+    <div class="drink-categories" id="drink-categories" style="display:none;">
+        <label><input type="radio" name="drink-category" value="hotdrinks"> Hot Drinks</label>
+        <label><input type="radio" name="drink-category" value="softdrinks"> Soft Drinks</label>
+        <!-- Add more categories as needed -->
+    </div>
+    <div id="items-container"></div>
+    <div id="cart">
+        <h2>Cart</h2>
+        <ul id="cart-items"></ul>
+        <p id="cart-total"></p>
+        <button onclick="submitCart()">Submit</button>
+    </div>
+    <script src="script.js"></script>
+<script>
+const items = [
+    // Example items
+    { id: 1, name: 'Tomato Soup', category: 'soups', type: 'veg', cost: 10, img: 'tomato_soup.jpg' },
+    { id: 2, name: 'Chicken Soup', category: 'soups', type: 'nonveg', cost: 15, img: 'chicken_soup.jpg' },
+    { id: 3, name: 'Coca Cola', category: 'softdrinks', cost: 20, img: 'cocacola.jpg' },
+    { id: 4, name: 'Whiskey', category: 'cocktails', cost: 50, img: 'whiskey.jpg', ageRestricted: true },
+    { id: 5, name: 'Coffee', category: 'hotdrinks', cost: 15, img: 'coffee.jpg' },
+];
+
+const cart = [];
+
+document.getElementById('food-checkbox').addEventListener('change', function() {
+    document.getElementById('food-type').disabled = !this.checked;
+    document.getElementById('food-categories').style.display = this.checked ? 'block' : 'none';
+});
+
+document.getElementById('drinks-checkbox').addEventListener('change', function() {
+    document.getElementById('drink-categories').style.display = this.checked ? 'block' : 'none';
+});
+
+document.querySelectorAll('.food-categories input').forEach(input => {
+    input.addEventListener('change', event => {
+        displayItems(event.target.value, 'food');
+    });
+});
+
+document.querySelectorAll('.drink-categories input').forEach(input => {
+    input.addEventListener('change', event => {
+        displayItems(event.target.value, 'drink');
+    });
+});
+
+function displayItems(category, type) {
+    const container = document.getElementById('items-container');
+    container.innerHTML = '';
+    const foodType = document.getElementById('food-type').value;
+    const filteredItems = items.filter(item => item.category === category && (type === 'food' ? item.type === foodType : true));
+    filteredItems.forEach(item => {
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'item';
+        itemDiv.innerHTML = `
+            <img src="${item.img}" alt="${item.name}">
+            <h3>${item.name}</h3>
+            <p>Cost: $${item.cost}</p>
+            <input type="number" min="1" value="1" id="quantity-${item.id}">
+            <button onclick="addToCart(${item.id})">Add to Cart</button>
+        `;
+        container.appendChild(itemDiv);
+    });
+}
+
+function addToCart(itemId) {
+    const item = items.find(item => item.id === itemId);
+    const quantity = document.getElementById(`quantity-${itemId}`).value;
+    if (item.ageRestricted) {
+        const proof = prompt('Please upload proof of age (Aadhar, Voter ID)');
+        if (!proof) return;
+    }
+    cart.push({ ...item, quantity });
+    updateCart();
+}
+
+function updateCart() {
+    const cartItems = document.getElementById('cart-items');
+    cartItems.innerHTML = '';
+    let total = 0;
+    cart.forEach(item => {
+        total += item.cost * item.quantity;
+        const li = document.createElement('li');
+        li.textContent = `${item.name} - ${item.quantity} pcs - $${item.cost * item.quantity}`;
+        cartItems.appendChild(li);
+    });
+    document.getElementById('cart-total').textContent = `Total: $${total}`;
+}
+
+function searchItems() {
+    const query = document.getElementById('search-bar').value.toLowerCase();
+    const container = document.getElementById('items-container');
+    container.innerHTML = '';
+    const filteredItems = items.filter(item => item.name.toLowerCase().includes(query));
+    filteredItems.forEach(item => {
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'item';
+        itemDiv.innerHTML = `
+            <img src="${item.img}" alt="${item.name}">
+            <h3>${item.name}</h3>
+            <p>Cost: $${item.cost}</p>
+            <input type="number" min="1" value="1" id="quantity-${item.id}">
+            <button onclick="addToCart(${item.id})">Add to Cart</button>
+        `;
+        container.appendChild(itemDiv);
+    });
+}
+
+function submitCart() {
+    alert('Your order has been submitted!');
+    // Additional submission logic here
+}
+</script
+</body>
+</html>

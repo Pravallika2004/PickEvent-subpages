@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choreographer Booking</title>
+    <link rel="stylesheet" href="styles.css">
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #FFC0CB; /* Baby pink background */
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+    width: 100%;
+}
+
+#search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+#search-bar, #date-time-picker {
+    padding: 10px;
+    width: 40%;
+    max-width: 300px;
+}
+
+main {
+    padding: 20px;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.choreographer {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+}
+
+.choreographer img {
+    max-width: 100%;
+    height: auto;
+}
+
+.rating span {
+    font-size: 1.5em;
+    color: gold;
+}
+
+.album img {
+    width: 30%;
+    margin: 5px;
+}
+
+.videos iframe {
+    margin: 10px 0;
+}
+
+.booking label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+.booking input[type="range"] {
+    width: 100%;
+}
+
+.booking button {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.booking button:hover {
+    background-color: #218838;
+}
+
+.booking button + button {
+    background-color: #ffc107;
+    margin-left: 10px;
+}
+
+.booking button + button:hover {
+    background-color: #e0a800;
+}
+
+#dancer-prompt {
+    margin-top: 10px;
+}
+
+.reviews textarea {
+    width: 100%;
+    height: 100px;
+    margin: 10px 0;
+}
+
+.reviews button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+}
+
+.reviews button:hover {
+    background-color: #0056b3;
+}
+
+.chat button {
+    background-color: #17a2b8;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.chat button:hover {
+    background-color: #138496;
+}
+
+.chat-icon {
+    margin-right: 5px;
+}
+
+.location-icon {
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+}
+
+#offers-sidebar {
+    width: 20%;
+    background-color: #f8f9fa;
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    left: -300px;
+    height: 100%;
+    transition: left 0.3s ease;
+}
+
+#offers-sidebar h2 {
+    margin-top: 0;
+}
+
+#offers-sidebar p {
+    margin: 10px 0;
+}
+
+/* Responsive styles */
+@media (max-width: 600px) {
+    main {
+        padding: 10px;
+    }
+
+    .choreographer {
+        padding: 10px;
+    }
+
+    #search-bar, #date-time-picker {
+        width: 80%;
+    }
+
+    #offers-sidebar {
+        width: 100%;
+    }
+  .popup-button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    animation: popup 1s infinite alternate;
+  }
+
+  @keyframes popup {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(-10px); /* Adjust this value for less/more distance */
+    }
+  }
+}
+</style>
+</head>
+<body>
+    <header>
+        <h1>Book Your Choreographer</h1>
+        <div id="search-container">
+            <input type="text" id="search-bar" placeholder="Search choreographers..." oninput="filterChoreographers()">
+            <input type="datetime-local" id="date-time-picker" onchange="checkAvailability()">
+        </div>
+    </header>
+    <aside id="offers-sidebar">
+        <h2>Offers</h2>
+        <p>10 Songs: $10000</p>
+        <p>Offer Code: DANCE10</p>
+        <!-- Add more offers as needed -->
+    </aside>
+    <main id="choreographer-list">
+        <!-- Choreographer Template -->
+        <div class="choreographer" data-available="true">
+            <img src="john doe.jpg" alt="Choreographer 1">
+            <h2>John Doe</h2>
+            <p><strong>Experience:</strong> 5 years</p>
+            <p><strong>Location:</strong> <img src="location-icon.png" alt="Location Icon" class="location-icon"> Kukatpally, Hyderabad</p>
+            <p><strong>Studio:</strong> Dance Central</p>
+            <div class="rating" data-rating="5">
+                <span>⭐</span>
+                <span>⭐</span>
+                <span>⭐</span>
+                <span>⭐</span>
+                <span>⭐</span>
+            </div>
+            <div class="album">
+                <h3>Album</h3>
+                <!-- Add album images here -->
+                <img src="album1.jpg" alt="Album Image 1">
+                <img src="album2.jpg" alt="Album Image 2">
+                <img src="album3.jpg" alt="Album Image 3">
+                <!-- Add more images as needed -->
+            </div>
+            <div class="videos">
+                <h3>Work Videos</h3>
+                <iframe width="200" height="150" src="https://www.youtube.com/embed/your-video-id"></iframe>
+                <iframe width="200" height="150" src="https://www.youtube.com/embed/your-video-id"></iframe>
+                <iframe width="200" height="150" src="https://www.youtube.com/embed/your-video-id"></iframe>
+            </div>
+            <div class="booking">
+                <label for="people">Number of People: </label>
+                <input type="range" id="people" name="people" min="1" max="100" value="10" oninput="updateCost(this.value)">
+                <span id="people-count">10</span>
+                <p>Cost: $<span id="cost">1000</span></p>
+                <label for="songs">Number of Songs: </label>
+                <input type="range" id="songs" name="songs" min="1" max="20" value="10" oninput="updateSongs(this.value)">
+                <span id="songs-count">10</span>
+                <p>Offer: <span id="offer-cost">10000</span></p>
+                <div class="offer-box">
+                    <label for="offer-code">Enter Offer Code: </label>
+                    <input type="text" id="offer-code">
+                    <button onclick="applyOffer()">Apply</button>
+                </div>
+                <div class="theme-selection">
+                    <h4>Select Dance Themes</h4>
+                    <label><input type="checkbox" name="theme" value="salsa"> Salsa</label>
+                    <label><input type="checkbox" name="theme" value="solo"> Solo</label>
+                    <label><input type="checkbox" name="theme" value="medley"> Medley</label>
+                    <label><input type="checkbox" name="theme" value="other"> Other: <input type="text" id="other-theme"></label>
+                </div>
+                <button onclick="toggleOffer()">View Offer</button>
+               <button class="popup-button">Book now</button>
+                <button onclick="toggleDancerPrompt()">Do you need any background dancers?</button>
+                <div id="dancer-prompt" style="display: none;">
+                    <button onclick="backgroundDancers('yes')">Yes</button>
+                    <button onclick="backgroundDancers('no')">No</button>
+                    <div id="dancer-count" style="display: none;">
+                        <label for="dancer-number">Number of Dancers: </label>
+                        <input type="number" id="dancer-number" min="1" max="20" value="1">
+                    </div>
+<div>
+<button class="popup-button">Book now</button>
+</div>
+                </div>
+            </div>
+            <div class="reviews">
+                <h3>Client Reviews</h3>
+                <div id="review-list">
+                    <p>Great Choreographer! - Jane</p>
+                    <p>Amazing Experience! - Smith</p>
+                </div>
+                <textarea id="new-review" placeholder="Write your review..."></textarea>
+                <button onclick="addReview()">Submit Review</button>
+            </div>
+            <div class="chat">
+                <h3>Chat with Us</h3>
+                <button onclick="openChat()">
+                    <img src="chatbox-icon.png" alt="Chat Icon" class="chat-icon"> Chat Now
+                </button>
+            </div>
+        </div>
+        <!-- Add more choreographers as needed -->
+    </main>
+    
+    <script src="script.js"></script>
+<script>
+const choreographers = [
+    {
+        name: 'John Doe',
+        experience: 5,
+        location: 'Kukatpally, Hyderabad',
+        studio: 'Dance Central',
+        rating: 5,
+        available: true,
+        album: ['album1.jpg', 'album2.jpg', 'album3.jpg'],
+        videos: ['https://www.youtube.com/embed/your-video-id', 'https://www.youtube.com/embed/your-video-id', 'https://www.youtube.com/embed/your-video-id']
+    }
+    // Add more choreographers here
+];
+
+function updateCost(people) {
+    document.getElementById('people-count').innerText = people;
+    let cost = people * 100; // Assuming cost per person is $100
+    document.getElementById('cost').innerText = cost;
+}
+
+function updateSongs(songs) {
+    document.getElementById('songs-count').innerText = songs;
+    let cost = songs * 1000; // Assuming cost per song is $1000
+    document.getElementById('cost').innerText = cost;
+}
+
+function applyOffer() {
+    const offerCode = document.getElementById('offer-code').value;
+    if (offerCode === 'DANCE10') {
+        alert('Offer applied successfully!');
+    } else {
+        alert('Invalid offer code.');
+    }
+}
+
+function bookChoreographer() {
+    alert("Choreographer booked successfully!");
+}
+
+function toggleDancerPrompt() {
+    var prompt = document.getElementById('dancer-prompt');
+    if (prompt.style.display === 'none' || prompt.style.display === '') {
+        prompt.style.display = 'block';
+    } else {
+        prompt.style.display = 'none';
+    }
+}
+
+function backgroundDancers(response) {
+    var dancerCount = document.getElementById('dancer-count');
+    if (response === 'yes') {
+        dancerCount.style.display = 'block';
+    } else {
+        dancerCount.style.display = 'none';
+    }
+}
+
+function addReview() {
+    let newReview = document.getElementById('new-review').value;
+    if (newReview) {
+        let reviewList = document.getElementById('review-list');
+        let newReviewElement = document.createElement('p');
+        newReviewElement.textContent = newReview;
+        reviewList.appendChild(newReviewElement);
+        document.getElementById('new-review').value = '';
+    }
+}
+
+function openChat() {
+    alert("Chat with us!");
+}
+
+function toggleOffer() {
+    var sidebar = document.getElementById('offers-sidebar');
+    if (sidebar.style.left === '-300px' || sidebar.style.left === '') {
+        sidebar.style.left = '0';
+    } else {
+        sidebar.style.left = '-300px';
+    }
+}
+
+function filterChoreographers() {
+    var searchQuery = document.getElementById('search-bar').value.toLowerCase();
+    var dateTime = document.getElementById('date-time-picker').value;
+    var choreographerList = document.getElementById('choreographer-list');
+
+    choreographerList.innerHTML = '';
+
+    choreographers.forEach(function (choreographer) {
+        if (choreographer.name.toLowerCase().includes(searchQuery)) {
+            var choreographerDiv = document.createElement('div');
+            choreographerDiv.classList.add('choreographer');
+            if (choreographer.available) {
+                choreographerDiv.style.borderColor = 'green';
+            } else {
+                choreographerDiv.style.borderColor = 'red';
+            }
+
+            choreographerDiv.innerHTML = `
+                <img src="${choreographer.album[0]}" alt="${choreographer.name}">
+                <h2>${choreographer.name}</h2>
+                <p><strong>Experience:</strong> ${choreographer.experience} years</p>
+                <p><strong>Location:</strong> <img src="location-icon.png" alt="Location Icon" class="location-icon"> ${choreographer.location}</p>
+                <p><strong>Studio:</strong> ${choreographer.studio}</p>
+                <div class="rating" data-rating="${choreographer.rating}">
+                    ${'⭐'.repeat(choreographer.rating)}
+                </div>
+                <div class="album">
+                    <h3>Album</h3>
+                    ${choreographer.album.map(img => `<img src="${img}" alt="Album Image">`).join('')}
+                </div>
+                <div class="videos">
+                    <h3>Work Videos</h3>
+                    ${choreographer.videos.map(video => `<iframe width="200" height="150" src="${video}"></iframe>`).join('')}
+                </div>
+                <div class="booking">
+                    <label for="people">Number of People: </label>
+                    <input type="range" id="people" name="people" min="1" max="100" value="10" oninput="updateCost(this.value)">
+                    <span id="people-count">10</span>
+                    <p>Cost: $<span id="cost">1000</span></p>
+                    <label for="songs">Number of Songs: </label>
+                    <input type="range" id="songs" name="songs" min="1" max="20" value="10" oninput="updateSongs(this.value)">
+                    <span id="songs-count">10</span>
+                    <p>Offer: <span id="offer-cost">10000</span></p>
+                    <div class="offer-box">
+                        <label for="offer-code">Enter Offer Code: </label>
+                        <input type="text" id="offer-code">
+                        <button onclick="applyOffer()">Apply</button>
+                    </div>
+                    <div class="theme-selection">
+                        <h4>Select Dance Themes</h4>
+                        <label><input type="checkbox" name="theme" value="salsa"> Salsa</label>
+                        <label><input type="checkbox" name="theme" value="solo"> Solo</label>
+                        <label><input type="checkbox" name="theme" value="medley"> Medley</label>
+                        <label><input type="checkbox" name="theme" value="other"> Other: <input type="text" id="other-theme"></label>
+                    </div>
+                    <button onclick="toggleOffer()">View Offer</button>
+                    <button onclick="bookChoreographer()">Book Now</button>
+                    <button onclick="toggleDancerPrompt()">Do you need any background dancers?</button>
+                    <div id="dancer-prompt" style="display: none;">
+                        <button onclick="backgroundDancers('yes')">Yes</button>
+                        <button onclick="backgroundDancers('no')">No</button>
+                        <div id="dancer-count" style="display: none;">
+                            <label for="dancer-number">Number of Dancers: </label>
+                            <input type="number" id="dancer-number" min="1" max="20" value="1">
+                        </div>
+                    </div>
+                </div>
+                <div class="reviews">
+                    <h3>Client Reviews</h3>
+                    <div id="review-list">
+                        <p>Great Choreographer! - Jane</p>
+                        <p>Amazing Experience! - Smith</p>
+                    </div>
+                    <textarea id="new-review" placeholder="Write your review..."></textarea>
+                    <button onclick="addReview()">Submit Review</button>
+                </div>
+                <div class="chat">
+                    <h3>Chat with Us</h3>
+                    <button onclick="openChat()">
+                        <img src="chatbox-icon.png" alt="Chat Icon" class="chat-icon"> Chat Now
+                    </button>
+                </div>
+            `;
+
+            choreographerList.appendChild(choreographerDiv);
+        }
+    });
+}
+
+function checkAvailability() {
+    // This function will check the availability of choreographers based on the selected date and time
+    // For demonstration purposes, we'll randomly set availability
+
+    choreographers.forEach(function (choreographer) {
+        choreographer.available = Math.random() >= 0.5;
+    });
+
+    filterChoreographers();
+}
+
+// Initial filter to display all choreographers
+filterChoreographers();
+
+// Function to check availability every 10 seconds
+setInterval(checkAvailability, 10000);
+</script>
+</body>
+</html>

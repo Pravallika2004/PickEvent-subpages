@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Online Gift Shop</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #d5e8d4;
+      margin: 0;
+      padding: 0;
+    }
+
+    .gift-shop {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .search-container {
+      display: flex;
+    }
+
+    .search-container input[type="text"] {
+      border: 2px solid #ff69b4;
+      padding: 10px;
+      border-top-left-radius: 4px;
+      border-bottom-left-radius: 4px;
+      outline: none;
+    }
+
+    .search-container button {
+      border: 2px solid #ff69b4;
+      border-left: none;
+      padding: 10px 20px;
+      border-top-right-radius: 4px;
+      border-bottom-right-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    select {
+      border: 2px solid #ff69b4;
+      padding: 10px;
+      border-radius: 4px;
+      outline: none;
+    }
+
+    button {
+      background-color: #f0f0f0;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #a9a9a9;
+    }
+
+    .gift-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .gift-item {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 20px;
+      width: 30%;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .gift-item img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+
+    .rating {
+      color: yellow;
+    }
+
+    .cart-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .cart-controls span {
+      font-size: 1.2em;
+    }
+
+    footer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .offer-container {
+      display: flex;
+      margin-bottom: 10px;
+    }
+
+    .offer-container input[type="text"] {
+      border: 2px solid #ff69b4;
+      padding: 10px;
+      border-top-left-radius: 4px;
+      border-bottom-left-radius: 4px;
+      outline: none;
+    }
+
+    .offer-container button {
+      border: 2px solid #ff69b4;
+      border-left: none;
+      padding: 10px 20px;
+      border-top-right-radius: 4px;
+      border-bottom-right-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+  </style>
+</head>
+<body>
+  <div class="gift-shop">
+    <header>
+      <h1>Online Gift Shop</h1>
+    </header>
+    <div class="controls">
+      <div class="search-container">
+        <input type="text" id="search-bar" placeholder="Search gifts...">
+        <button id="search-button">Search</button>
+      </div>
+      <select id="event-dropdown">
+        <option value="">Select Event</option>
+        <option value="birthday">Birthday</option>
+        <option value="wedding">Wedding</option>
+        <option value="anniversary">Anniversary</option>
+      </select>
+    </div>
+    <div id="gift-list" class="gift-list"></div>
+    <footer>
+      <div class="offer-container">
+        <input type="text" id="offer-bar" placeholder="Enter offer code...">
+        <button id="apply-offer-button">Apply Offer</button>
+      </div>
+      <button id="submit-button">Submit</button>
+    </footer>
+  </div>
+
+  <script>
+    const gifts = [
+      { id: 1, name: "Toy Car", description: "A fun toy car for kids.", rating: 4.5, ageGroup: "child", image: "https://example.com/toy-car.jpg" },
+      { id: 2, name: "Perfume", description: "A lovely perfume for adults.", rating: 4.0, ageGroup: "adult", image: "https://example.com/perfume.jpg" },
+      { id: 3, name: "Book", description: "An engaging book for the elderly.", rating: 4.8, ageGroup: "old", image: "https://example.com/book.jpg" }
+    ];
+
+    const cart = {};
+
+    function renderStars(rating) {
+      const fullStars = Math.floor(rating);
+      const halfStar = rating % 1 >= 0.5;
+      const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+      return '★'.repeat(fullStars) + (halfStar ? '★' : '') + '☆'.repeat(emptyStars);
+    }
+
+    function renderGiftList() {
+      const giftList = document.getElementById('gift-list');
+      giftList.innerHTML = '';
+      gifts.forEach(gift => {
+        const giftItem = document.createElement('div');
+        giftItem.className = 'gift-item';
+        giftItem.innerHTML = `
+          <img src="${gift.image}" alt="${gift.name}">
+          <h3>${gift.name}</h3>
+          <p>${gift.description}</p>
+          <p class="rating">${renderStars(gift.rating)}</p>
+          <div class="cart-controls">
+            <button onclick="addToCart(${gift.id})">+</button>
+            <span id="quantity-${gift.id}">${cart[gift.id] || 0}</span>
+            <button onclick="removeFromCart(${gift.id})">-</button>
+          </div>
+        `;
+        giftList.appendChild(giftItem);
+      });
+    }
+
+    function addToCart(giftId) {
+      if (!cart[giftId]) {
+        cart[giftId] = 0;
+      }
+      cart[giftId]++;
+      document.getElementById(`quantity-${giftId}`).innerText = cart[giftId];
+    }
+
+    function removeFromCart(giftId) {
+      if (cart[giftId] > 0) {
+        cart[giftId]--;
+        document.getElementById(`quantity-${giftId}`).innerText = cart[giftId];
+      }
+    }
+
+    document.getElementById('apply-offer-button').onclick = function() {
+      const offer = document.getElementById('offer-bar').value;
+      alert(`Offer applied: ${offer}`);
+    };
+
+    document.getElementById('submit-button').onclick = function() {
+      alert('Selected from store');
+    };
+
+    renderGiftList();
+  </script>
+</body>
+</html>

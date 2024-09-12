@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Party Booking</title>
+    <link rel="stylesheet" href="styles.css">
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #666;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.search-section {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+}
+
+#partyType, #searchBar {
+    margin: 10px 10px;
+    padding: 10px;
+    font-size: 30px;
+}
+
+#placesContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 20px;
+}
+
+.place {
+    background-color: #45a049;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 20px;
+    width: 200px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color:  palevioletred;
+    background-color:  palevioletred;
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: white;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+</style>
+</head>
+<body>
+    <header>
+        <h1>Party Booking</h1>
+    </header>
+    <main>
+        <div class="search-section">
+            <label for="partyType"></label>
+            <select id="partyType" onchange="filterPlaces()">
+                <option value="private theaters">Private Theaters</option>
+                <option value="cafes">Cafes</option>
+                <option value="bars">Bars</option>
+                <option value="lounges">Lounges</option>
+                <option value="clubs">Clubs</option>
+                <option value="resorts">Resorts</option>
+                <option value="villas">Villas</option>
+            </select>
+            <input type="text" id="searchBar" placeholder="Search places or area" oninput="filterPlaces()">
+        </div>
+        <div id="placesContainer"></div>
+    </main>
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="placeDetails"></div>
+            <div>
+                <label for="numPeople">Number of People:</label>
+                <input type="number" id="numPeople" min="1">
+            </div>
+            <div id="costDisplay"></div>
+            <label for="paymentMethod">Payment Method:</label>
+            <select id="paymentMethod">
+                <option value="online">Online</option>
+                <option value="offline">Offline</option>
+            </select>
+            <button onclick="bookParty()">Book Now</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+<script>
+const places = [
+    { type: 'private theaters', name: 'Private Theater 1', cost: 100, images: [theater1.jpg', 'img2.jpg'] },
+    { type: 'cafes', name: 'Cafe 1', cost: 50, images: ['cafes1.jpg', 'img2.jpg'] },
+    {type: 'lounges', name: 'lounge 1', cost: 50, images: ['lounge1.jpg', 'img2.jpg'] },
+ { type: 'bars', name: 'bar 1', cost: 50, images: ['bar1.jpg', 'img2.jpg'] },
+ { type: 'villas', name: 'villa 1', cost: 50, images: ['img1.jpg', 'img2.jpg'] },
+ { type: 'resorts', name: 'resort 1', cost: 50, images: ['resort1.jpg', 'img2.jpg'] },
+    // Add more places as needed
+];
+
+function filterPlaces() {
+    const partyType = document.getElementById('partyType').value;
+    const searchBar = document.getElementById('searchBar').value.toLowerCase();
+    const placesContainer = document.getElementById('placesContainer');
+    placesContainer.innerHTML = '';
+
+    const filteredPlaces = places.filter(place =>
+        place.type === partyType &&
+        (place.name.toLowerCase().includes(searchBar) || searchBar === '')
+    );
+
+    filteredPlaces.forEach(place => {
+        const placeElement = document.createElement('div');
+        placeElement.className = 'place';
+        placeElement.textContent = place.name;
+        placeElement.onclick = () => showDetails(place);
+        placesContainer.appendChild(placeElement);
+    });
+}
+
+function showDetails(place) {
+    const placeDetails = document.getElementById('placeDetails');
+    placeDetails.innerHTML = `
+        <h2>${place.name}</h2>
+        ${place.images.map(img => `<img src="${img}" alt="${place.name}" style="width:100px;height:100px;">`).join('')}
+        <p>Cost per 2 members: $${place.cost}</p>
+    `;
+    document.getElementById('bookingModal').style.display = 'block';
+}
+
+function closeModal() {
+    document.getElementById('bookingModal').style.display = 'none';
+}
+
+function bookParty() {
+    const numPeople = document.getElementById('numPeople').value;
+    const paymentMethod = document.getElementById('paymentMethod').value;
+    const placeName = document.getElementById('placeDetails').querySelector('h2').textContent;
+    const cost = places.find(place => place.name === placeName).cost;
+
+    const totalCost = cost * Math.ceil(numPeople / 2);
+    const costDisplay = document.getElementById('costDisplay');
+    costDisplay.innerHTML = `Total Cost: $${totalCost}`;
+
+    alert(`Booking confirmed for ${numPeople} people at ${placeName}. Payment method: ${paymentMethod}. Total cost: $${totalCost}.`);
+    closeModal();
+}
+</script>
+</body>
+</html>

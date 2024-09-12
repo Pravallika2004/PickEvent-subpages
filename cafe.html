@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cafe Booking</title>
+    <link rel="stylesheet" href="styles.css">
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+h1, h2 {
+    color: #333;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+input[type="text"], input[type="number"], select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    background: #5cb85c;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background: #4cae4c;
+}
+
+#cafesList {
+    margin-top: 20px;
+}
+
+.cafe {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.cafe img {
+    max-width: 100px;
+    margin-right: 10px;
+}
+
+.cafe-info {
+    display: inline-block;
+    vertical-align: top;
+}
+</style>
+</head>
+<body>
+    <div class="container">
+        <h1>Cafe Booking</h1>
+        <form id="searchForm">
+            <label for="location">Enter Location:</label>
+            <input type="text" id="location" name="location" required>
+            
+            <label for="area">Select Area:</label>
+            <select id="area" name="area">
+                <option value="outside">Outside</option>
+                <option value="inside">Inside</option>
+            </select>
+            
+            <button type="button" onclick="searchCafes()">Search</button>
+        </form>
+        
+        <div id="cafesList"></div>
+        
+        <div id="bookingForm" style="display: none;">
+            <h2>Book a Table</h2>
+            <p id="selectedCafe"></p>
+            
+            <label for="people">Number of People:</label>
+            <input type="number" id="people" name="people" required min="1">
+            
+            <label for="payment">Payment Method:</label>
+            <input type="checkbox" id="online" name="payment" value="online"> Online
+            <input type="checkbox" id="offline" name="payment" value="offline"> Offline
+            
+            <button type="button" onclick="submitBooking()">Submit</button>
+        </div>
+    </div>
+    
+    <script src="scripts.js"></script>
+<script>
+const cafes = [
+    {
+        name: 'Cafe Mocha',
+        image: 'https://via.placeholder.com/100',
+        cost: '20',
+        menu: 'Coffee, Tea, Snacks',
+        location: 'Downtown'
+    },
+    {
+        name: 'Brew Brothers',
+        image: 'https://via.placeholder.com/100',
+        cost: '30',
+        menu: 'Coffee, Pastries',
+        location: 'Uptown'
+    }
+];
+
+function searchCafes() {
+    const location = document.getElementById('location').value;
+    const area = document.getElementById('area').value;
+    
+    const cafesList = document.getElementById('cafesList');
+    cafesList.innerHTML = '';
+    
+    cafes.forEach(cafe => {
+        const cafeDiv = document.createElement('div');
+        cafeDiv.className = 'cafe';
+        
+        const cafeImage = document.createElement('img');
+        cafeImage.src = cafe.image;
+        
+        const cafeInfo = document.createElement('div');
+        cafeInfo.className = 'cafe-info';
+        
+        cafeInfo.innerHTML = `
+            <h3>${cafe.name}</h3>
+            <p>Cost for two: $${cafe.cost}</p>
+            <p>Menu: ${cafe.menu}</p>
+            <p>Location: ${cafe.location}</p>
+            <label for="people">Number of People:</label>
+            <input type="number" id="people-${cafe.name}" name="people" required min="1">
+            <button onclick="bookTable('${cafe.name}')">Book Table</button>
+        `;
+        
+        cafeDiv.appendChild(cafeImage);
+        cafeDiv.appendChild(cafeInfo);
+        cafesList.appendChild(cafeDiv);
+    });
+}
+
+function bookTable(cafeName) {
+    const bookingForm = document.getElementById('bookingForm');
+    const selectedCafe = document.getElementById('selectedCafe');
+    
+    selectedCafe.textContent = `Booking for: ${cafeName}`;
+    bookingForm.style.display = 'block';
+}
+
+function submitBooking() {
+    const people = document.getElementById('people').value;
+    const online = document.getElementById('online').checked;
+    const offline = document.getElementById('offline').checked;
+    
+    if (!online && !offline) {
+        alert('Please select a payment method');
+        return;
+    }
+    
+    alert(`Booking submitted successfully for ${people} people`);
+    document.getElementById('bookingForm').style.display = 'none';
+}
+</script>
+
+</body>
+</html>

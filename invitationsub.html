@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invitation Card Maker</title>
+    <link rel="stylesheet" href="styles.css">
+<style>
+/* Add your custom CSS styles here */
+
+/* Basic styles, customize as needed */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff; /* White background */
+    margin: 0;
+    padding: 60px;
+}
+
+header {
+    background-color: #fddde6; /* Pale pink header background */
+    padding: 40px;
+    text-align: center;
+}
+
+h1 {
+    color: maroon; /* Maroon color for heading */
+}
+
+.search-bar {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.search-bar input[type="text"] {
+    padding: 10px;
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.search-bar button {
+    padding: 10px 20px;
+    background-color: maroon; /* Maroon button background */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 10px;
+}
+
+main {
+    padding: 20px;
+}
+
+footer {
+    background-color: #fddde6; /* Pale pink footer background */
+    padding: 10px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.model-gallery {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 40px;
+    margin-top: 10px;
+}
+
+.model-gallery .model {
+    text-align: center;
+}
+
+.model-gallery .model img {
+    max-width: 200px;
+    height: auto;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.order-section, .submit-section {
+    margin-top: 20px;
+}
+
+.order-section select, .order-section button, .submit-section button {
+    padding: 10px 20px;
+    background-color: maroon; /* Maroon button background */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+}
+</style>
+</head>
+<body>
+    <header>
+        <h1>Invitation Card Maker</h1>
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search by area...">
+            <button onclick="search()">Search</button>
+        </div>
+      <label for="eventType">Type of Event:</label>
+            <select id="eventType">
+                <option value="">All Events</option>
+                <option value="Wedding">Wedding</option>
+                <option value="Birthday">Birthday</option>
+                <option value="Corporate">Corporate Event</option>
+                <option value="Other">Other</option>
+            </select>
+            <input type="text" id="customEventType" placeholder="Enter custom event type">
+        </div>
+    </header>
+    
+ <main>
+        <section id="shopList">
+            <!-- Shop list will be dynamically populated -->
+        </section>
+    </main>
+
+    <footer>
+        <div class="model-gallery">
+            <!-- Model images will be dynamically populated -->
+        </div>
+        <div class="order-section">
+            <h2>Order Details</h2>
+            <label for="selectedModel">Select Model:</label>
+            <select id="selectedModel">
+                <!-- Model options will be dynamically populated -->
+            </select>
+         <label for="numInvitations">Number of Invitations:</label>
+            <input type="number" id="numInvitations" required>
+            <label for="invitationSize">Invitation Size (Width x Height):</label>
+            <input type="text" id="invitationSize" placeholder="e.g., 5x7 inches" required>
+         
+        </div>
+   
+
+            <button onclick="addToCart()">Add to Cart</button>
+        </div>
+        <div class="submit-section">
+            <button onclick="submitOrder()">Submit Order</button>
+        </div>
+<div class="query">
+              <button type="button" onclick="openChat()">Chat with us</button>
+        <div id="chatBox">
+            <textarea id="chatMessage" rows="4" cols="50" placeholder="Enter your query here..."></textarea><br>
+            <button type="button" onclick="closeChat()">Close</button>
+        </div>
+    </div>
+
+
+    </footer>
+
+    <script src="script.js"></script>
+<Script>
+// Example data for shops (replace with actual data)
+const shops = [
+    { 
+        name: "Shop A", 
+        area: "Area 1", 
+        models: [
+            { id: "model1", name: "cloth", cost: "$", size: "5x7 inches", image: "shopA_model1.jpg" },
+            { id: "model2", name: "scroll", cost: "$$", size: "6x8 inches", image: "shopA_model2.jpg" },
+            { id: "model3", name: "card", cost: "$$$", size: "7x9 inches", image: "shopA_model3.jpg" },
+            // Add more models as needed
+        ]
+    },
+    { 
+        name: "Shop B", 
+        area: "Area 2", 
+        models: [
+            { id: "model4", name: "Model 4", cost: "$", size: "5x7 inches", image: "shopB_model4.jpg" },
+            { id: "model5", name: "Model 5", cost: "$$", size: "6x8 inches", image: "shopB_model5.jpg" },
+            { id: "model6", name: "Model 6", cost: "$$$", size: "7x9 inches", image: "shopB_model6.jpg" },
+            // Add more models as needed
+        ]
+    },
+    // Add more shops as needed
+];
+
+// Function to populate shop list
+window.onload = function() {
+    const shopList = document.getElementById("shopList");
+    shops.forEach(shop => {
+        const shopElement = document.createElement('div');
+        shopElement.classList.add('shop');
+        shopElement.innerHTML = `
+            <h2>${shop.name}</h2>
+            <div class="model-gallery">
+                ${shop.models.map(model => `
+                    <div class="model">
+                        <img src="${model.image}" alt="${model.name}">
+                        <p><strong>${model.name}</strong></p>
+                        <p><strong>Cost:</strong> ${model.cost}</p>
+                        <button onclick="selectModel('${model.id}')">Select</button>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+        shopList.appendChild(shopElement);
+    });
+};
+
+// Function to select a model
+function selectModel(modelId) {
+    const selectedModel = document.getElementById("selectedModel");
+    selectedModel.innerHTML = ''; // Clear previous options
+
+    // Create option for selected model
+    const model = shops.flatMap(shop => shop.models).find(model => model.id === modelId);
+    const option = document.createElement('option');
+    option.text = `${model.name} - ${model.cost}`;
+    option.value = model.id;
+    selectedModel.add(option);
+}
+
+// Function to add selected item to cart (example implementation)
+function addToCart() {
+    const selectedModel = document.getElementById("selectedModel");
+    const modelId = selectedModel.value;
+
+    if (modelId) {
+        const model = shops.flatMap(shop => shop.models).find(model => model.id === modelId);
+        alert(`Added ${model.name} to cart!`); // Example alert, customize as needed
+    } else {
+        alert("Please select a model!");
+    }
+}
+
+// Function to submit order (example implementation)
+function submitOrder() {
+    const numInvitations = document.getElementById("numInvitations").value;
+    const invitationSize = document.getElementById("invitationSize").value;
+
+    // Example validation (customize as needed)
+    if (numInvitations === "" || invitationSize === "") {
+        alert("Please select number of invitations and size!");
+        return;
+    }
+
+    // Example submission logic (send data to server or process order)
+    alert(`Order Submitted!\nNumber of Invitations: ${numInvitations}\nSize: ${invitationSize}`);
+}
+ function openChat() {
+            document.getElementById('chatBox').style.display = 'block';
+        }
+
+        function closeChat() {
+            document.getElementById('chatBox').style.display = 'none';
+        }
+
+
+</script
+.</body>
+</html>

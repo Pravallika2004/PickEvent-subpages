@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Bands</title>
+    <link rel="stylesheet" href="styles.css">
+<style>
+body {
+    font-family: Arial, sans-serif;
+}
+
+header {
+    text-align: center;
+    padding: 20px;
+    background-color: #f8f8f8;
+}
+
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+#searchBar {
+    width: 30%;
+    padding: 10px;
+    font-size: 16px;
+}
+
+#searchDate {
+    padding: 10px;
+    font-size: 16px;
+}
+
+#searchButton {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.band-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
+}
+
+.band-item {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 20px;
+    width: 300px;
+    position: relative;
+    background-color: #fff;
+}
+
+.band-item img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.band-info {
+    text-align: center;
+}
+
+.band-rating {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.star {
+    font-size: 20px;
+    color: grey;
+    cursor: pointer;
+}
+
+.star:hover,
+.star.hover {
+    color: yellow;
+}
+
+.available {
+    color: green;
+}
+
+.busy {
+    color: red;
+}
+
+.book-button {
+    background: linear-gradient(to right, red, orange);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.book-button:hover {
+    opacity: 0.8;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 700px;
+    position: relative;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#modal-body img, #modal-body video {
+    width: 100%;
+    margin-bottom: 10px;
+}
+</style>
+</head>
+<body>
+    <header>
+        <h1>Live Bands</h1>
+        <div class="search-container">
+            <input type="text" id="searchBar" placeholder="Search for bands...">
+            <input type="date" id="searchDate">
+            <button id="searchButton">Search</button>
+        </div>
+    </header>
+    <main>
+        <div class="band-list">
+            <!-- Band Items will be inserted here by JavaScript -->
+        </div>
+    </main>
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="modal-body">
+                <!-- Pictures and videos will be inserted here by JavaScript -->
+            </div>
+        </div>
+    </div>
+    <script src="scripts.js"></script>
+<script>
+const bands = [
+    {
+        name: 'The Rockers',
+        image: 'path/to/image1.jpg',
+        rating: 4.5,
+        area: 'New York',
+        availability: 'available',
+        cost: '$500',
+        media: [
+            'path/to/media1.jpg',
+            'path/to/media2.jpg',
+            'path/to/media3.mp4',
+            // Add up to 8 pictures and videos
+        ]
+    },
+    {
+        name: 'Jazz Masters',
+        image: 'path/to/image2.jpg',
+        rating: 4.0,
+        area: 'Los Angeles',
+        availability: 'busy',
+        cost: '$400',
+        media: [
+            'path/to/media1.jpg',
+            'path/to/media2.jpg',
+            'path/to/media3.mp4',
+            // Add up to 8 pictures and videos
+        ]
+    },
+    // Add more bands as needed
+];
+
+function createBandItem(band) {
+    const bandItem = document.createElement('div');
+    bandItem.className = 'band-item';
+
+    const bandImage = document.createElement('img');
+    bandImage.src = band.image;
+
+    const bandInfo = document.createElement('div');
+    bandInfo.className = 'band-info';
+    bandInfo.innerHTML = `
+        <h3>${band.name}</h3>
+        <div class="band-rating">${createStarRating(band.rating)}</div>
+        <p>${band.area}</p>
+        <p class="cost">${band.cost}</p>
+        <p class="${band.availability}">${band.availability}</p>
+        <button class="book-button">Book</button>
+        <a href="#" class="view-media" data-media="${band.media.join(',')}">View Media</a>
+    `;
+
+    bandItem.appendChild(bandImage);
+    bandItem.appendChild(bandInfo);
+
+    return bandItem;
+}
+
+function createStarRating(rating) {
+    let stars = '';
+    for (let i = 1; i <= 5; i++) {
+        stars += `<span class="star ${i <= rating ? 'hover' : ''}" data-rating="${i}">&#9733;</span>`;
+    }
+    return stars;
+}
+
+function displayBands(filteredBands = bands) {
+    const bandList = document.querySelector('.band-list');
+    bandList.innerHTML = '';
+    filteredBands.forEach(band => {
+        const bandItem = createBandItem(band);
+        bandList.appendChild(bandItem);
+    });
+
+    document.querySelectorAll('.star').forEach(star => {
+        star.addEventListener('mouseover', function() {
+            this.classList.add('hover');
+            const previousSiblings = getPreviousSiblings(this);
+            previousSiblings.forEach(sibling => sibling.classList.add('hover'));
+        });
+
+        star.addEventListener('mouseout', function() {
+            document.querySelectorAll('.star').forEach(s => s.classList.remove('hover'));
+        });
+    });
+
+    document.querySelectorAll('.view-media').forEach(link => {
+        link.addEventListener('click', function(event) {
+            event.preventDefault();
+            const mediaList = this.getAttribute('data-media').split(',');
+            showModal(mediaList);
+        });
+    });
+}
+
+function getPreviousSiblings(elem) {
+    const siblings = [];
+    while ((elem = elem.previousElementSibling)) {
+        siblings.push(elem);
+    }
+    return siblings;
+}
+
+function showModal(mediaList) {
+    const modal = document.getElementById('modal');
+    const modalBody = document.getElementById('modal-body');
+    modalBody.innerHTML = '';
+    mediaList.forEach(media => {
+        if (media.endsWith('.mp4')) {
+            const video = document.createElement('video');
+            video.src = media;
+            video.controls = true;
+            modalBody.appendChild(video);
+        } else {
+            const img = document.createElement('img');
+            img.src = media;
+            modalBody.appendChild(img);
+        }
+    });
+    modal.style.display = 'block';
+}
+
+document.querySelector('.close').addEventListener('click', function() {
+    document.getElementById('modal').style.display = 'none';
+});
+
+window.addEventListener('click', function(event) {
+    if (event.target == document.getElementById('modal')) {
+        document.getElementById('modal').style.display = 'none';
+    }
+});
+
+document.getElementById('searchButton').addEventListener('click', function() {
+    const query = document.getElementById('searchBar').value.toLowerCase();
+    const date = document.getElementById('searchDate').value;
+    const filteredBands = bands.filter(band => 
+        band.name.toLowerCase().includes(query) && 
+        (date ? band.availability.toLowerCase() === 'available' : true)
+    );
+    displayBands(filteredBands);
+});
+
+displayBands();
+</script>
+</body>
+</html>

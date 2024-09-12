@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pandits and Astrologers</title>
+    <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5-Star Rating System</title>
+    <style>
+        .stars {
+            display: flex;
+            cursor: pointer;
+        }
+
+        .star {
+            font-size: 2em;
+            color: Black;
+            transition: color 0.2s;
+        }
+
+        .star:hover,
+        .star.selected {
+            color: red;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <h1>Profiles of Pandits and Astrologers</h1>
+        <div class="profile" id="profile1">
+            <div class="profile-header">
+                <img src="pandit_ram_sharma.jpg" alt="Pandit Ram Sharma" class="profile-pic">
+<div class="stars" id="stars">
+        <span class="star" data-value="1">&#9733;</span>
+        <span class="star" data-value="2">&#9733;</span>
+        <span class="star" data-value="3">&#9733;</span>
+        <span class="star" data-value="4">&#9733;</span>
+        <span class="star" data-value="5">&#9733;</span>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const stars = document.querySelectorAll('.star');
+            stars.forEach(star => {
+                star.addEventListener('click', () => {
+                    const rating = star.getAttribute('data-value');
+                    stars.forEach(s => {
+                        s.classList.remove('selected');
+                        if (s.getAttribute('data-value') <= rating) {
+                            s.classList.add('selected');
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+
+                
+            </div>
+            <h2>Pandit Ram Sharma</h2>
+            <p>Location: Varanasi, India</p>
+            <p>Experience: 10 years</p>
+            <p>Cost: $50/hour</p>
+            <label for="availability1">Availability:</label>
+            <input type="datetime-local" id="availability1">
+            <button class="book-button" onclick="bookAppointment('Pandit Ram Sharma', 'availability1')">Book</button>
+        </div>
+        <div class="profile" id="profile2">
+            <div class="profile-header">
+                <img src="astrologer_anjali_mehta.jpg" alt="Astrologer Anjali Mehta" class="profile-pic">
+                <div class="rating">⭐⭐⭐⭐</div>
+            </div>
+            <h2>Astrologer Anjali Mehta</h2>
+            <p>Location: Mumbai, India</p>
+            <p>Experience: 15 years</p>
+            <p>Cost: $75/hour</p>
+            <label for="availability2">Availability:</label>
+            <input type="datetime-local" id="availability2">
+            <button class="book-button" onclick="bookAppointment('Astrologer Anjali Mehta', 'availability2')">Book</button>
+        </div>
+        <div id="chat-box">
+            <h2>Chat with Us</h2>
+            <div id="chat-content"></div>
+            <input type="text" id="chat-input" placeholder="Type your message here...">
+            <button id="send-button" onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+    <script src="scripts.js"></script>
+</body>
+</html>

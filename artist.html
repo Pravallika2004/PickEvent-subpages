@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>External Activity Artists</title>
+    <link rel="stylesheet" href="styles.css">
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    padding: 1em 0;
+}
+
+main {
+    padding: 2em;
+}
+
+.search-container,
+.calendar-container,
+.artists-container {
+    margin-bottom: 1em;
+}
+
+.artists-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+}
+
+.artist {
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 1em;
+    width: calc(33.333% - 2em);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    cursor: pointer;
+    text-align: center;
+}
+
+.artist img {
+    max-width: 100%;
+    height: auto;
+}
+
+#details-container {
+    margin-top: 1em;
+}
+
+#submit-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 0.5em 1em;
+    border: none;
+    cursor: pointer;
+    display: none;
+}
+
+#submit-button:hover {
+    background-color: #45a049;
+}
+</style>
+</head>
+<body>
+    <header>
+        <h1>External Activity Artists</h1>
+    </header>
+    <main>
+        <div class="search-container">
+            <input type="text" id="search-bar" placeholder="Search for an artist...">
+            <button onclick="searchArtist()">Search</button>
+        </div>
+        <div class="calendar-container">
+            <label for="activity-date">Select Date: </label>
+            <input type="date" id="activity-date">
+        </div>
+        <div class="artists-container">
+            <div class="artist" id="mehandi-artist" onclick="showMehandiDetails()">
+                <img src="mehandi.jpg" alt="Mehandi Artist">
+                <p>Mehandi Artist</p>
+            </div>
+            <div class="artist" id="tattoo-artist" onclick="showTattooDetails()">
+                <img src="tattoo.jpg" alt="Tattoo Artist">
+                <p>Tattoo Artist</p>
+            </div>
+            <div class="artist" id="hair-braid-artist" onclick="showHairBraidDetails()">
+                <img src="hair-braid.jpg" alt="Live Hair Braid">
+                <p>Live Hair Braid (Goa Hair)</p>
+            </div>
+            <div class="artist" id="fire-pan" onclick="showFirePanDetails()">
+                <img src="fire-pan.jpg" alt="Fire Pan">
+                <p>Fire Pan</p>
+            </div>
+            <div class="artist" id="magician" onclick="showMagicianDetails()">
+                <img src="magician.jpg" alt="Magician">
+                <p>Magician</p>
+            </div>
+            <div class="artist" id="live-painter" onclick="showPainterDetails()">
+                <img src="painter.jpg" alt="Live Painter">
+                <p>Live Painter</p>
+            </div>
+            <div class="artist" id="gymnastics" onclick="showGymnasticsDetails()">
+                <img src="gymnastics.jpg" alt="Gymnastics">
+                <p>Gymnastics</p>
+            </div>
+        </div>
+        <div id="details-container">
+            <!-- Details for selected artist will appear here -->
+        </div>
+        <button id="submit-button" onclick="submitDetails()">Submit</button>
+    </main>
+    <script src="script.js"></script>
+<script>
+function searchArtist() {
+    const searchBar = document.getElementById('search-bar').value;
+    alert('Search functionality is not implemented yet.');
+}
+
+function showMehandiDetails() {
+    const detailsContainer = document.getElementById('details-container');
+    detailsContainer.innerHTML = `
+        <h2>Mehandi Artist</h2>
+        <label for="mehandi-people">Number of People:</label>
+        <input type="number" id="mehandi-people" min="1">
+        <label for="mehandi-cost">Cost per Person:</label>
+        <input type="number" id="mehandi-cost" min="20/-">
+        <label for="mehandi-color">Color of Mehandi:</label>
+        <input type="text" id="mehandi-color">
+    `;
+    showSubmitButton();
+}
+
+function showTattooDetails() {
+    const detailsContainer = document.getElementById('details-container');
+    detailsContainer.innerHTML = `
+        <h2>Tattoo Artist</h2>
+        <label><input type="checkbox" id="permanent-tattoo"> Permanent Tattoo</label>
+        <label><input type="checkbox" id="fake-tattoo"> Fake Tattoo</label>
+        <label for="tattoo-cost">Cost per Tattoo:</label>
+        <input type="number" id="tattoo-cost" min="450/-">
+    `;
+    showSubmitButton();
+}
+
+function showHairBraidDetails() {
+    const detailsContainer = document.getElementById('details-container');
+    detailsContainer.innerHTML = `
+        <h2>Live Hair Braid (Goa Hair)</h2>
+        <label for="hair-people">Number of People:</label>
+        <input type="number" id="hair-people" min="1">
+        <label for="hair-cost">Cost per Person:</label>
+        <input type="number" id="hair-cost" min="20/-">
+    `;
+    showSubmitButton();
+}
+
+function showFirePanDetails() {
+    const detailsContainer = document.getElementById('details-container');
+    detailsContainer.innerHTML = `
+        <h2>Fire Pan</h2>
+        <label for="pan-quantity">Number of Pans:</label>
+        <input type="number" id="pan-quantity" min="1">
+        <label for="pan-cost">Cost per Hour:</label>
+        <input type="number" id="pan-cost" min="3000/-">
+    `;
+    showSubmitButton();
+}
+
+function showMagicianDetails() {
+    const detailsContainer = document.getElementById('details-container');
+    detailsContainer.innerHTML = `
+        <h2>Magician</h2>
+        <label for="magician-cost">Cost per Hour:</label>
+        <input type="number" id="magician-cost" min="5000/-">
+    `;
+    showSubmitButton();
+}
+
+function showPainterDetails() {
+    const detailsContainer = document.getElementById('details-container');
+    detailsContainer.innerHTML = `
+        <h2>Live Painter</h2>
+        <label for="paint-quantity">Number of Paints:</label>
+        <input type="number" id="paint-quantity" min="1">
+        <label for="paint-cost">Cost per Paint:</label>
+        <input type="number" id="paint-cost" min="4000/-">
+    `;
+    showSubmitButton();
+}
+
+function showGymnasticsDetails() {
+    const detailsContainer = document.getElementById('details-container');
+    detailsContainer.innerHTML = `
+        <h2>Gymnastics</h2>
+        <label for="gymnastics-type">Type:</label>
+        <select id="gymnastics-type">
+            <option value="entertaining">Entertaining</option>
+            <option value="teaching">Teaching</option>
+        </select>
+        <label for="gymnastics-people">Number of People:</label>
+        <input type="number" id="gymnastics-people" min="1">
+        <label for="gymnastics-cost">Cost per Person:</label>
+        <input type="number" id="gymnastics-cost" min="0">
+    `;
+    showSubmitButton();
+}
+
+function showSubmitButton() {
+    document.getElementById('submit-button').style.display = 'block';
+}
+
+function submitDetails() {
+    alert('Details submitted!');
+}
+</script>
+</body>
+</html>

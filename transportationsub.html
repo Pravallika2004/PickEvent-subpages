@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+ <title>BOOK YOUR RIDE</title>
+    <link rel="stylesheet" href="styles.css">
+<style>
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.2;
+}
+
+header {
+    background-color: #f2f2f2;
+    text-align: center;
+    padding: 30px 30;
+}
+
+header h1 {
+    font-size: 100px;
+}
+
+.pink {
+    color: pink;
+}
+
+.purple {
+    color: purple;
+}
+
+            body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 10px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .button {
+            background-color: red;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .button-red:hover {
+            background-color: blue;
+        }
+        .button-green-light {
+            background-color: lightgreen;
+            color: darkgreen;
+            width: 15%;
+            padding: 15px;
+            border: none;
+            cursor: pointer;
+        }
+        .button-green-dark {
+            background-color: darkgreen;
+            color: lightgreen;
+            border: none;
+            cursor: pointer;
+        }
+        .button-green-light:hover,
+        .button-green-dark:hover {
+            background-color: green;
+        }
+        .transportation-icons {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .transportation-icons img {
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .transportation-icons img:hover {
+            transform: scale(1.1);
+        }
+        .offer-box {
+            position: fixed;
+            top: 50%;
+            left: -200px;
+            transform: translateY(-50%);
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            cursor: pointer;
+            border-radius: 0 4px 4px 0;
+            transition: left 0.3s;
+        }
+        .offer-box:hover {
+            left: 0;
+        }
+        
+         .offer-box {
+            position: fixed;
+            top: 50%;
+            left: -200px;
+            transform: translateY(-50%);
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            cursor: pointer;
+            border-radius: 0 4px 4px 0;
+            transition: left 0.3s;
+        }
+        .offer-box:hover {
+            left: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 10px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+      .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+        .button-group button {
+            padding: 10px 20px;
+            cursor: pointer;
+            border: none;
+            color: white;
+        }
+        .button-group .book {
+            background-color: red;
+            transition: background-color 0.3s;
+        }
+        .button-group .book:hover {
+            background-color: blue;
+        }
+        .payment-options button {
+            width: 48%;
+            background-color: lightgreen;
+            transition: background-color 0.3s;
+        }
+        .payment-options button:hover {
+            background-color: darkgreen;
+        }
+        .offer {
+            margin-bottom: 20px;
+        }
+        .offer input {
+            width: calc(100% - 100px);
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        .offer button {
+            width: 100px;
+            padding: 10px;
+            cursor: pointer;
+            background-color: yellow;
+            border: none;
+        }
+        .btn-ride {
+  width: 25%;
+  padding: 15px;
+  border-radius: 8px;
+}
+.btn-ride:hover {
+  background-color: green;
+  color: #fff;
+}
+.btn-apply{
+
+    width: 25%;
+    padding: 15px  ;
+    margin: 0px auto;
+}
+.apply-wrapper {
+  text-align: center;
+}
+
+    </style>
+
+    <script url="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
+    <script>
+        let map, directionsService, directionsRenderer;
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: -34.397, lng: 150.644},
+                zoom: 8
+            });
+
+            directionsService = new google.maps.DirectionsService();
+            directionsRenderer = new google.maps.DirectionsRenderer();
+            directionsRenderer.setMap(map);
+
+            const input1 = document.getElementById('pickup-location');
+            const input2 = document.getElementById('destination-location');
+
+            new google.maps.places.Autocomplete(input1);
+            new google.maps.places.Autocomplete(input2);
+        }
+
+        function calculateRoute() {
+            const pickupLocation = document.getElementById('pickup-location').value;
+            const destinationLocation = document.getElementById('destination-location').value;
+
+            if (pickupLocation && destinationLocation) {
+                directionsService.route(
+                    {
+                        origin: pickupLocation,
+                        destination: destinationLocation,
+                        travelMode: google.maps.TravelMode.DRIVING
+                    },
+                    (response, status) => {
+                        if (status === 'OK') {
+                            directionsRenderer.setDirections(response);
+                            displayCostAndBooking();
+                        } else {
+                            window.alert('Directions request failed due to ' + status);
+                        }
+                    }
+                );
+            } 
+     else {
+                window.alert('Please enter both pickup and destination locations.');
+            }
+        }
+
+        function displayCostAndBooking() {
+            const costElement = document.getElementById('cost');
+            const bookingElement = document.getElementById('booking');
+            const paymentElement = document.getElementById('payment-method');
+
+            costElement.innerHTML = "Estimated Cost: $20";
+            bookingElement.innerHTML = '<button class="button button-red" onclick="bookRide()">Book Now</button>';
+            paymentElement.innerHTML = `
+                <label for="payment">Payment Method:</label>
+                <button class="button button-green-light" onclick="selectPayment('Cash')">Cash</button>
+                <button class="button button-green-dark" onclick="selectPayment('Online')">Online</button>
+            `;
+        }
+
+        function bookRide() {
+            alert('Ride booked!');
+        }
+
+        function selectTransport(type) {
+            alert(type + " selected");
+        }
+
+        function selectPayment(method) {
+            alert('Payment method: ' + method);
+        }
+    </script>
+</head>
+<body onload="initMap()">
+
+
+ <h1>BOOK YOUR RIDE </h1>
+
+
+    <div class="container">
+        <div class="form-group">
+            <label for="pickup-location">Pickup Location:</label>
+            <input type="text" id="pickup-location" name="pickup-location" placeholder="Enter pickup location">
+        </div>
+        <div class="form-group">
+            <label for="destination-location">Where to go?</label>
+            <input type="text" id="destination-location" name="destination-location" placeholder="Enter destination">
+        </div>
+        <div class="transportation-icons">
+            <img src="Bike.jpg" alt="Bike" title="Bike" onclick="selectTransport('Bike')">
+            <img src="auto.jpg" alt="Auto" title="Auto" onclick="selectTransport('Auto')">
+            <img src="car.jpg" alt="Car" title="Car" onclick="selectTransport('Car')">
+            <img src="bus1.jpg" alt="Bus" title="Bus" onclick="selectTransport('Bus')">
+        </div>
+<div class="form-group">
+            <label for="offer-code">Offer Code:</label>
+            <input type="text" id="offer-code" name="offer-code" placeholder="Enter offer code">
+        </div>
+        <div class="apply-wrapper">
+            <button type="button" class="btn-apply" onclick="calculateRoute()">Apply</button>
+        </div>
+        <div id="map"></div>
+    </div>
+    <div class="payment-options">
+            <button>Cash</button>
+            <button>Online</button>
+        </div>
+    <div class="offer-box">
+        <p>Get 20% Off with Code: RIDE20</p>
+    </div>
+    <script>
+        function selectTransport(type) {
+            alert(type + " selected");
+        }
+    </script>
+
+        <button type="button" class="button btn-ride button-red" onclick="calculateRoute()">BookRide</button>
+        <div id="cost"></div>
+        <div id="payment-method"></div>
+        <div id="booking"></div>
+        <div id="map" style="height: 400px; width: 100%; margin-top: 20px;"></div>
+    </div>
+    <div class="offer-box">
+        <p>Get 20% Off with Code: RIDE20</p>
+    </div>
+</body>
+</html>

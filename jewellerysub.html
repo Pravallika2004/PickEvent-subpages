@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jewelry Shop</title>
+    <style>
+        body {
+            background: linear-gradient(to right, lightgoldenrodyellow, lightgrey);
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+        }
+        .search-bar {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .search-bar input[type="text"] {
+            width: 70%;
+            padding: 10px;
+            margin-right: 10px;
+        }
+        .search-bar button {
+            padding: 10px 20px;
+            background-color: maroon;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .filters {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+        }
+        .filters select, .filters input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        .shop-list {
+            margin-top: 20px;
+        }
+        .shop-item {
+            background-color: #fff;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .shop-item h3 {
+            color: maroon;
+        }
+        .shop-item p {
+            margin: 5px 0;
+        }
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .gallery-item {
+            position: relative;
+            margin: 10px;
+            text-align: center;
+        }
+        .gallery img {
+            width: 100px;
+            height: 100px;
+            cursor: pointer;
+        }
+        .gallery input[type="checkbox"] {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+        .cost {
+            margin-top: 5px;
+            color: maroon;
+        }
+        .cart-button, .submit-button {
+            padding: 10px 20px;
+            background-color: maroon;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .submit-button {
+            display: block;
+            width: 100%;
+            text-align: center;
+        }
+        .submit-button:disabled {
+            background-color: grey;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="search-bar">
+            <input type="text" placeholder="Search for jewelry...">
+            <button>Search</button>
+        </div>
+
+        <div class="filters">
+            <div>
+                <label><input type="checkbox" name="gender" value="men"> Men</label>
+                <label><input type="checkbox" name="gender" value="women"> Women</label>
+            </div>
+            <div>
+                <select name="material" id="material">
+                    <option value="">Select Material</option>
+                    <option value="gold">Gold</option>
+                    <option value="silver">Silver</option>
+                    <option value="platinum">Platinum</option>
+                    <option value="rosegold">Rose Gold</option>
+                    <option value="dummy-silver">Dummy (Silver)</option>
+                    <option value="dummy-rosegold">Dummy (Rose Gold)</option>
+                    <option value="beads">Beads</option>
+                    <option value="charms">Charms</option>
+                </select>
+            </div>
+            <div>
+                <select name="category" id="category">
+                    <option value="">Select Category</option>
+                    <option value="earring">Earring</option>
+                    <option value="necklace">Necklace</option>
+                    <option value="ring">Ring</option>
+                    <option value="bracelet">Bracelet</option>
+                    <option value="mangalsutra">Mangalsutra</option>
+                    <option value="pendent">Pendent</option>
+                    <option value="chain">Chain</option>
+                    <option value="bangle">Bangle</option>
+                    <option value="nosepin">Nose Pin</option>
+                    <option value="other">Other (Specify below)</option>
+                </select>
+                <input type="text" placeholder="Specify other category" id="otherCategory">
+            </div>
+        </div>
+
+        <div class="shop-list">
+            <!-- Example Shop Item -->
+            <div class="shop-item">
+                <h3>Nani's Jewellery</h3>
+                <p>Rating: ★★★★☆</p>
+                <p>Area: Kukatpally,housing board,hyderabad</p>
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="example1.jpg" alt="Design 1">
+                        <input type="checkbox" class="design-checkbox">
+                        <div class="cost">$100</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="example2.jpg" alt="Design 2">
+                        <input type="checkbox" class="design-checkbox">
+                        <div class="cost">$150</div>
+                    </div>
+                    <!-- More images -->
+                </div>
+                <button class="cart-button">Add to Cart</button>
+            </div>
+            <!-- Repeat for other shops -->
+        </div>
+
+        <button class="submit-button" disabled>Submit</button>
+    </div>
+
+    <script>
+        const materialSelect = document.getElementById('material');
+        const categorySelect = document.getElementById('category');
+        const otherCategoryInput = document.getElementById('otherCategory');
+        const designCheckboxes = document.querySelectorAll('.design-checkbox');
+        const submitButton = document.querySelector('.submit-button');
+
+        function checkSubmitButtonState() {
+            if (materialSelect.value !== "" && categorySelect.value !== "" && document.querySelector('.design-checkbox:checked')) {
+                submitButton.disabled = false;
+            } else {
+                submitButton.disabled = true;
+            }
+        }
+
+        materialSelect.addEventListener('change', checkSubmitButtonState);
+        categorySelect.addEventListener('change', checkSubmitButtonState);
+        otherCategoryInput.addEventListener('input', checkSubmitButtonState);
+        designCheckboxes.forEach(checkbox => checkbox.addEventListener('change', checkSubmitButtonState));
+    </script>
+</body>
+</html>

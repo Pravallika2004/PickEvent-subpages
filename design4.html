@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boutique & Designer Studio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Boutique & Designer Studio</h1>
+        
+        <form id="boutique-form">
+            <label for="name">Boutique/Studio Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="rating">Rating:</label>
+            <input type="number" id="rating" name="rating" min="1" max="5" required>
+
+            <label for="work-pieces">Work Pieces (Upload Pictures):</label>
+            <input type="file" id="work-pieces" name="work-pieces" multiple>
+
+            <label>Gender:</label>
+            <input type="radio" id="men" name="gender" value="Men" required>
+            <label for="men">Men</label>
+            <input type="radio" id="women" name="gender" value="Women" required>
+            <label for="women">Women</label>
+
+            <label for="occasion">Select Occasion:</label>
+            <select id="occasion" name="occasion">
+                <option value="">--Select Occasion--</option>
+                <option value="wedding">Wedding</option>
+                <option value="marriage">Marriage</option>
+                <option value="annual-day">Annual Day</option>
+                <option value="parties">Parties</option>
+                <option value="formal">Formal</option>
+                <option value="traditional-event">Traditional Event</option>
+                <option value="bride-making">Bride Making</option>
+                <option value="mehndi">Mehndi</option>
+                <option value="haldi">Haldi</option>
+                <option value="pooja-rituals">Pooja Rituals</option>
+            </select>
+
+            <label for="age-group">Age Group:</label>
+            <select id="age-group" name="age-group" required>
+                <option value="">--Select Age Group--</option>
+                <option value="newborn">Newborn (0-2 months)</option>
+                <option value="infant">Infant (3-11 months)</option>
+                <option value="toddler">Toddler (1-2 years)</option>
+                <option value="preschooler">Preschooler (3-4 years)</option>
+                <option value="school-aged">School-aged child (5-12 years)</option>
+                <option value="teens">Teens (13-19 years)</option>
+            </select>
+
+            <label for="type">Redimate or Customized:</label>
+            <select id="type" name="type" required>
+                <option value="">--Select Type--</option>
+                <option value="redimate">Redimate</option>
+                <option value="customized">Customized</option>
+            </select>
+
+            <div id="redimate-options" style="display: none;">
+                <label for="redimate-pieces">Redimate Pieces:</label>
+                <input type="file" id="redimate-pieces" name="redimate-pieces" multiple>
+                <button type="button" onclick="addToCart()">Add to Cart</button>
+            </div>
+
+            <div id="customized-options" style="display: none;">
+                <h3>Measurements:</h3>
+                <label for="length">Length:</label>
+                <input type="text" id="length" name="length">
+                <label for="shoulder">Shoulder:</label>
+                <input type="text" id="shoulder" name="shoulder">
+                <label for="hand-length">Hand Length:</label>
+                <input type="text" id="hand-length" name="hand-length">
+                <label for="hand-loose">Hand Loose:</label>
+                <input type="text" id="hand-loose" name="hand-loose">
+                <label for="arm-round">Arm Round:</label>
+                <input type="text" id="arm-round" name="arm-round">
+                <label for="chest">Chest:</label>
+                <input type="text" id="chest" name="chest">
+                <label for="waist">Waist:</label>
+                <input type="text" id="waist" name="waist">
+            </div>
+
+            <label for="client-designs">Client Design Pictures:</label>
+            <input type="file" id="client-designs" name="client-designs" multiple>
+
+            <button type="submit">Submit</button>
+        </form>
+
+        <div id="live-chat">
+            <button id="close-chat" onclick="toggleChat()">Close</button>
+            <p>Live Chat Box</p>
+        </div>
+
+        <label for="review">Review:</label>
+        <textarea id="review" name="review"></textarea>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

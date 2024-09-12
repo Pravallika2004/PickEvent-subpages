@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mocktail Stations</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<style>
+/* Basic styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+}
+<style>
+/* Basic styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header, footer, section {
+    background-color: #fff;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 20px;
+}
+
+header h1, footer button {
+    color: maroon;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: maroon;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+button:hover {
+    background-color: #5a0000;
+}
+
+input[type="text"], input[type="number"] {
+    padding: 10px;
+    width: 100%;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    margin-bottom: 10px;
+}
+
+/* Adjustments for mobile */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+}
+
+
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header, footer, section {
+    background-color: #fff;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 20px;
+}
+
+header h1, footer button {
+    color: maroon;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: maroon;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+button:hover {
+    background-color: #5a0000;
+}
+
+input[type="text"], input[type="number"] {
+    padding: 10px;
+    width: 100%;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    margin-bottom: 10px;
+}
+
+/* Adjustments for mobile */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+}
+</style>
+<body>
+    <header>
+        <div class="container">
+            <h1>Mocktail Stations</h1>
+            <input type="text" id="searchInput" placeholder="Search...">
+            <button id="searchButton">Search</button>
+        </div>
+    </header>
+
+    <section id="delivery">
+        <div class="container">
+            <h2>Delivery Address</h2>
+            <input type="text" id="deliveryAddress" placeholder="Enter delivery address">
+            <button id="grantLocation">Grant Location</button>
+        </div>
+    </section>
+
+     <section id="mocktailStations">
+        <div class="container">
+            <h2>Mocktail Stations</h2>
+            <!-- Mocktail menu dropdown -->
+            <div>
+                <label for="mocktailType">Mocktail Menu Type:</label>
+                <select id="mocktailType">
+                    <option value="spice drinks">spice drinks</option>
+                    <option value="sweet drinks">sweet drinks</option>
+                    <option value="both">Both</option>
+                </select>
+            </div>
+            <!-- Mocktail items -->
+            <div id="mocktailItems">
+                <!-- Dynamically populated through JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <section id="foodMenu">
+        <div class="container">
+            <h2>Food Menu</h2>
+            <!-- Food menu checkboxes -->
+            <div>
+                <label><input type="checkbox" name="foodType" value="vegetarian"> Vegetarian</label>
+                <label><input type="checkbox" name="foodType" value="nonvegetarian"> Non-Vegetarian</label>
+                <label><input type="checkbox" name="foodType" value="both"> Both</label>
+            </div>
+            <!-- Food items -->
+            <div id="foodItems">
+                <!-- Dynamically populated through JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <section id="cart">
+        <div class="container">
+            <h2>Cart</h2>
+            <ul id="cartItems">
+                <!-- Dynamically populated through JavaScript -->
+            </ul>
+            <button id="confirmOrder">Confirm Order</button>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <button id="offerButton">View Offers</button>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Mock data for demonstration
+    const mocktailData = [
+        { name: 'Mocktail 1', type: 'vegetarian', price: 5, image: 'mocktail1.jpg' },
+        { name: 'Mocktail 2', type: 'nonvegetarian', price: 6, image: 'mocktail2.jpg' },
+        // Add more mocktail items as needed
+    ];
+
+    const foodData = [
+        { name: 'Food Item 1', type: 'vegetarian', price: 8, image: 'food1.jpg' },
+        { name: 'Food Item 2', type: 'nonvegetarian', price: 10, image: 'food2.jpg' },
+        // Add more food items as needed
+    ];
+
+    // Function to populate mocktail items
+    function populateMocktails() {
+        const mocktailItemsDiv = document.getElementById('mocktailItems');
+        mocktailItemsDiv.innerHTML = '';
+        mocktailData.forEach(item => {
+            const itemDiv = document.createElement('div');
+            itemDiv.classList.add('menu-item');
+
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.name = 'mocktail';
+            checkbox.value = `${item.name},${item.price}`;
+            itemDiv.appendChild(checkbox);
+
+            const label = document.createElement('label');
+            label.textContent = `${item.name} - $${item.price}`;
+            itemDiv.appendChild(label);
+
+            const img = document.createElement('img');
+            img.src = item.image;
+            img.alt = item.name;
+            img.classList.add('item-image');
+            itemDiv.appendChild(img);
+
+            mocktailItemsDiv.appendChild(itemDiv);
+        });
+    }
+
+    // Function to populate food items
+    function populateFoodMenu() {
+        const foodItemsDiv = document.getElementById('foodItems');
+        foodItemsDiv.innerHTML = '';
+        foodData.forEach(item => {
+            const itemDiv = document.createElement('div');
+            itemDiv.classList.add('menu-item');
+
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.name = 'food';
+            checkbox.value = `${item.name},${item.price}`;
+            itemDiv.appendChild(checkbox);
+
+            const label = document.createElement('label');
+            label.textContent = `${item.name} - $${item.price}`;
+            itemDiv.appendChild(label);
+
+            const img = document.createElement('img');
+            img.src = item.image;
+            img.alt = item.name;
+            img.classList.add('item-image');
+            itemDiv.appendChild(img);
+
+            foodItemsDiv.appendChild(itemDiv);
+        });
+    }
+
+    // Populate mocktails and food menu initially
+    populateMocktails();
+    populateFoodMenu();
+
+    // Event listener for confirm order button
+    const confirmOrderButton = document.getElementById('confirmOrder');
+    confirmOrderButton.addEventListener('click', function() {
+        const selectedItems = [];
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+        checkboxes.forEach(checkbox => {
+            const [name, price] = checkbox.value.split(',');
+            selectedItems.push({ name, price: parseFloat(price) });
+        });
+
+        // For demonstration, just log the selected items
+        console.log(selectedItems);
+        // Here you would typically send the order data to a server or process further
+        // For simplicity, we log it to console in this example.
+    });
+
+    // Additional functionality such as handling offers can be added here
+});
+</script>
+</body>
+</html>

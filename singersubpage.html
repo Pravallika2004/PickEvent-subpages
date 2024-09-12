@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Singer Booking</title>
+    <link rel="stylesheet" href="styles.css">
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+    padding: 20px;
+    background-color: #fafafa;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1, h3 {
+    text-align: center;
+    color: #333;
+}
+
+.search-box {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.search-box input {
+    width: 60%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px 0 0 4px;
+}
+
+.search-box button {
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+}
+
+.filters {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    color: #ff69b4;
+}
+
+.filters input, .filters select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.singer-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.singer {
+    width: 30%;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 10px;
+    text-align: center;
+}
+
+.singer img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.rating {
+    margin: 10px 0;
+}
+
+.rating .star {
+    color: yellow;
+    font-size: 20px;
+}
+
+.rating .star.grey {
+    color: grey;
+}
+
+.singer input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 100%;
+    margin: 10px 0;
+}
+
+.offer-section {
+    background-color: #ddd;
+    padding: 20px;
+    text-align: center;
+    border-radius: 8px;
+}
+
+.offer-section input, .offer-section button {
+    padding: 10px;
+    margin: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.offer-section button {
+    background-color: #333;
+    color: #fff;
+    cursor: pointer;
+}
+</style>
+</head>
+<body>
+    <div class="container">
+        <h1>Book a Singer</h1>
+        <div class="search-box">
+            <input type="text" id="search" placeholder="Search for singers...">
+            <button id="search-btn">Search</button>
+        </div>
+        <div class="filters">
+            <label><input type="checkbox" id="male"> Male</label>
+            <label><input type="checkbox" id="female"> Female</label>
+            <select id="singer-type">
+                <option value="flok">Folk Singer</option>
+                <option value="melody">Melody Singer</option>
+            </select>
+            <input type="text" id="event-type" placeholder="Type of Event">
+            <input type="number" id="num-singers" placeholder="Number of Singers">
+        </div>
+        <div class="singer-list">
+            <div class="singer">
+                <h2>John Doe</h2>
+                <img src="singer1.jpg" alt="John Doe">
+                <div class="rating">
+                    <span class="star">&#9733;</span>
+                    <span class="star">&#9733;</span>
+                    <span class="star">&#9733;</span>
+                    <span class="star grey">&#9733;</span>
+                    <span class="star grey">&#9733;</span>
+                </div>
+                <input type="number" id="num-songs" placeholder="Number of Songs">
+                <p>Cost: $500</p>
+                <a href="video1.mp4">Work Video</a>
+            </div>
+            <!-- Repeat similar blocks for other singers -->
+        </div>
+        <div class="offer-section">
+            <h3>Special Package Offer</h3>
+            <input type="text" id="offer-code" placeholder="Enter Offer Code">
+            <button id="apply-offer">Apply Offer</button>
+            <p id="offer-message"></p>
+            <p>Overall Cost: <span id="overall-cost">$500</span></p>
+            <button id="submit-btn">Submit</button>
+        </div>
+    </div>
+    <script src="scripts.js"></script>
+<script>
+document.getElementById('apply-offer').addEventListener('click', function() {
+    const offerCode = document.getElementById('offer-code').value;
+    const overallCostElement = document.getElementById('overall-cost');
+    let overallCost = parseFloat(overallCostElement.textContent.replace('$', ''));
+    
+    if (offerCode === 'DISCOUNT10') {
+        overallCost *= 0.9; // Apply a 10% discount
+        document.getElementById('offer-message').textContent = 'Offer applied!';
+    } else {
+        document.getElementById('offer-message').textContent = 'Invalid offer code';
+    }
+    
+    overallCostElement.textContent = `$${overallCost.toFixed(2)}`;
+});
+</script>
+</body>
+</html>
